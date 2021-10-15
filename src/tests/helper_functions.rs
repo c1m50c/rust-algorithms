@@ -1,5 +1,8 @@
 use std::time::{Duration, Instant};
 use std::vec::Vec;
+
+use term_painter::{Color::*, ToStyle};
+use term_painter::Attr::*;
 use rand::Rng;
 
 
@@ -15,7 +18,13 @@ pub fn create_integer_vector(length: i32, rand_min: i32, rand_max: i32) -> Vec<i
     /* Todo: Multi-threading? Or anything to speed up function time. */
     let mut vec: Vec<i32> = Vec::with_capacity(length as usize);
 
-    println!("Creating Vector of length '{}'...", length);
+    println!("{}{}{}{}{}",
+        Yellow.paint("Creating Vector of length "),
+        Yellow.bold().paint("'"),
+        Yellow.bold().paint(length),
+        Yellow.bold().paint("'"),
+        Yellow.paint(" ⌛"),
+    );
     let begin_time: Instant = Instant::now();
 
     for _i in 0 .. length {
@@ -24,7 +33,17 @@ pub fn create_integer_vector(length: i32, rand_min: i32, rand_max: i32) -> Vec<i
     }
 
     let elapsed_time: Duration = begin_time.elapsed();
-    println!("Created Vector of length '{}' in {}ms", length, elapsed_time.as_millis());
+    println!("{}{}{}{}{}{}{}{}{}",
+        Green.paint("Created Vector of length "),
+        Green.bold().paint("'"),
+        Green.bold().paint(length),
+        Green.bold().paint("'"),
+        Green.paint(" in "),
+        Green.bold().paint("'"),
+        Green.bold().paint(elapsed_time.as_millis()),
+        Green.bold().paint("ms'"),
+        Green.paint(" ✅"),
+    );
 
     return vec;
 }
