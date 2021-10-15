@@ -44,14 +44,13 @@ pub fn speed_test(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, length: i32) {
         Black.bold().paint("Search Speed Test"),
     );
 
-    let vec: Vec<i32> = create_integer_vector(length, RAND_MIN, RAND_MAX);
-
-    /* Todo: Make these based off length? */
-    const RAND_MIN: i32 = -2500000;
-    const RAND_MAX: i32 = 2500000;
+    let rand_min: i32 = -length;
+    let rand_max: i32 = length;
+    
+    let vec: Vec<i32> = create_integer_vector(length, rand_min, rand_max);
 
     let begin_time: Instant = Instant::now();
-    let finding: i32 = rand::thread_rng().gen_range(RAND_MIN .. RAND_MAX);
+    let finding: i32 = rand::thread_rng().gen_range(rand_min .. rand_max);
     let found: Option<usize> = func(&vec, finding);
     let end_time: Duration = begin_time.elapsed();
 
