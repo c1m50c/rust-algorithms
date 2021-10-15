@@ -5,6 +5,7 @@ use super::super::searching_algorithms::linear_search::linear_search;
 /* Sorting Algorithms */
 use super::super::sorting_algorithms::selection_sort::selection_sort;
 use super::super::sorting_algorithms::insertion_sort::insertion_sort;
+use super::super::sorting_algorithms::merge_sort::merge_sort;
 
 /* Tests */
 use super::super::tests::searching_tests::run_tests as run_searching_tests;
@@ -34,6 +35,7 @@ pub fn run_command(input: String) {
             println!("linear_search");
             println!("selection_sort");
             println!("insertion_sort");
+            println!("merge_sort");
             println!(")");
         }
 
@@ -45,6 +47,7 @@ pub fn run_command(input: String) {
             run_searching_tests(&linear_search as &dyn Fn(&Vec<i32>, i32) -> Option<usize>, "LinearSearch");
             run_sorting_tests(&selection_sort as &dyn Fn(&mut Vec<i32>), "SelectionSort");
             run_sorting_tests(&insertion_sort as &dyn Fn(&mut Vec<i32>), "InsertionSort");
+            run_sorting_tests(&merge_sort as &dyn Fn(&mut Vec<i32>), "MergeSort");
         }
 
         "searching" => {
@@ -54,6 +57,7 @@ pub fn run_command(input: String) {
         "sorting" => {
             run_sorting_tests(&selection_sort as &dyn Fn(&mut Vec<i32>), "SelectionSort");
             run_sorting_tests(&insertion_sort as &dyn Fn(&mut Vec<i32>), "InsertionSort");
+            run_sorting_tests(&merge_sort as &dyn Fn(&mut Vec<i32>), "MergeSort");
         }
 
         "linear_search" => {
@@ -66,6 +70,10 @@ pub fn run_command(input: String) {
 
         "insertion_sort" => {
             run_sorting_tests(&insertion_sort as &dyn Fn(&mut Vec<i32>), "InsertionSort");
+        }
+
+        "merge_sort" => {
+            run_sorting_tests(&merge_sort as &dyn Fn(&mut Vec<i32>), "MergeSort");
         }
 
         _ => {
