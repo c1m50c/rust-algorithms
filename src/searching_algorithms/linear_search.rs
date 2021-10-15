@@ -14,7 +14,7 @@ use std::vec::Vec;
 /// Worst Case Time Complexity == O(n)
 /// Average Case Time Complexity == O(n / 2)
 /// Best Case Time Complexity == O(1)
-/// Space Time Complexity == O(1)
+/// Space Complexity == O(1)
 /// ```
 pub fn linear_search(vec: &Vec<i32>, finding: i32) -> Result<usize, &'static str> {
     for index in 0 .. vec.len() {
