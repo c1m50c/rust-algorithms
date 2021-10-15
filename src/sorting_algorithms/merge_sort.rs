@@ -28,6 +28,7 @@ fn merge(left: &[i32], right: &[i32], vec: &mut Vec<i32>) {
     if j < right.len() { vec[m..].copy_from_slice(&right[j..]); }
 }
 
+
 /// # Merge Sort
 /// ### Parameters:
 /// ```rust

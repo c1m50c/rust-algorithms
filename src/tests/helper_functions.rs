@@ -21,7 +21,7 @@ pub fn create_integer_vector(length: i32, rand_min: i32, rand_max: i32) -> Vec<i
         Yellow.bold().paint("'"),
         Yellow.bold().paint(length),
         Yellow.bold().paint("'"),
-        Yellow.paint(" ⌛"),
+        Yellow.paint(" ⏳"),
     );
     let begin_time: Instant = Instant::now();
 

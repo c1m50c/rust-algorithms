@@ -1,4 +1,5 @@
 use super::helper_functions::create_integer_vector;
+use super::super::sorting_algorithms::merge_sort::merge_sort;
 
 use std::time::{Duration, Instant};
 use std::option::Option;
@@ -19,14 +20,14 @@ pub fn run_tests(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, func_name: &'st
     println!("<{}>\n", func_name);
 
     /* Speed Tests */
-    speed_test(func, 1000);
-    speed_test(func, 10000);
-    speed_test(func, 100000);
-    speed_test(func, 500000);
-    speed_test(func, 1000000);
-    speed_test(func, 5000000);
-    speed_test(func, 10000000);
-    speed_test(func, 50000000);
+    speed_test(func, 1000, func_name);
+    speed_test(func, 10000, func_name);
+    speed_test(func, 100000, func_name);
+    speed_test(func, 500000, func_name);
+    speed_test(func, 1000000, func_name);
+    speed_test(func, 5000000, func_name);
+    speed_test(func, 10000000, func_name);
+    speed_test(func, 50000000, func_name);
 
     /* Assertion Test */
     assertion_test(func);
@@ -42,7 +43,7 @@ pub fn run_tests(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, func_name: &'st
 /// func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>  // The searching algorithm's coresponding function.
 /// length: i32 // Desired len() of testing Vector.
 /// ```
-pub fn speed_test(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, length: i32) {
+pub fn speed_test(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, length: i32, func_name: &'static str) {
     println!("{}",
         Black.bold().paint("Search Speed Test"),
     );
@@ -50,7 +51,12 @@ pub fn speed_test(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, length: i32) {
     let rand_min: i32 = -length;
     let rand_max: i32 = length;
 
-    let vec: Vec<i32> = create_integer_vector(length, rand_min, rand_max);
+    let mut vec: Vec<i32> = create_integer_vector(length, rand_min, rand_max);
+
+    /* Sort vector for functions that require sorting */
+    if func_name == "BinarySearch" {
+        pre_sort_vector(&mut vec, &merge_sort as &dyn Fn(&mut Vec<i32>), "MergeSort");
+    }
 
     let begin_time: Instant = Instant::now();
     let finding: i32 = rand::thread_rng().gen_range(rand_min .. rand_max);
@@ -190,4 +196,31 @@ fn assert_compare(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, vec: Vec<i32>,
             }
         }
     }
+}
+
+
+fn pre_sort_vector(vec: &mut Vec<i32>, sorting_func: &dyn Fn(&mut Vec<i32>), sorting_func_name: &'static str) {
+    let begin_time: Instant = Instant::now();
+    println!("{}{}{}{}{}",
+        Yellow.paint("Pre-sorting Vector with "),
+        Yellow.bold().paint("'"),
+        Yellow.bold().paint(sorting_func_name),
+        Yellow.bold().paint("'"),
+        Yellow.paint(" ⏳"),
+    );
+
+    sorting_func(vec);
+    let end_time: Duration = begin_time.elapsed();
+
+    println!("{}{}{}{}{}{}{}{}{}",
+        Green.paint("Pre-sorted Vector of length "),
+        Green.bold().paint("'"),
+        Green.bold().paint(vec.len()),
+        Green.bold().paint("'"),
+        Green.paint(" in "),
+        Green.bold().paint("'"),
+        Green.bold().paint(end_time.as_secs_f32()),
+        Green.bold().paint("s'"),
+        Green.paint(" ✅"),
+    );
 }
