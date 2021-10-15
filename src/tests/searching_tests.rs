@@ -1,7 +1,10 @@
 use super::helper_functions::create_integer_vector;
+
 use std::time::{Duration, Instant};
 use std::option::Option;
 use std::vec::Vec;
+
+use term_painter::{Color::*, ToStyle};
 use rand::Rng;
 
 
@@ -37,7 +40,9 @@ pub fn run_tests(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>) {
 /// length: i32 // Desired len() of testing Vector.
 /// ```
 pub fn speed_test(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, length: i32) {
-    println!("Search Speed Test");
+    println!("{}",
+        Black.bold().paint("Search Speed Test"),
+    );
 
     let vec: Vec<i32> = create_integer_vector(length, RAND_MIN, RAND_MAX);
 
@@ -51,9 +56,39 @@ pub fn speed_test(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, length: i32) {
     let end_time: Duration = begin_time.elapsed();
 
     match found {
-        Some(idx) => println!("Searched for '{}', found at index '{}'.", finding, idx),
-        None => println!("Searched for '{}', '{}' does not exist within given Vector.", finding, finding),
+        Some(idx) => {
+            println!("{}{}{}{}{}{}{}{}{}",
+                Green.paint("Searched for "),
+                Green.bold().paint("'"),
+                Green.bold().paint(finding),
+                Green.bold().paint("'"),
+                Green.paint(", found at index "),
+                Green.bold().paint("'"),
+                Green.bold().paint(idx),
+                Green.bold().paint("'"),
+                Green.paint(" ✅")
+            );
+        }
+
+        None => {
+            println!("{}{}{}{}{}{}{}{}{}",
+                Red.paint("Searched for "),
+                Red.bold().paint("'"),
+                Red.bold().paint(finding),
+                Red.bold().paint("'"),
+                Red.paint(", Could not find "),
+                Red.bold().paint("'"),
+                Red.bold().paint(finding),
+                Red.bold().paint("'"),
+                Red.paint(" anywhere within the given Vector ❌"),
+            );
+        }
     }
 
-    println!("Time Elapsed: {}ms\n", end_time.as_millis());
+    println!("{}{}{}{}",
+        BrightMagenta.paint("Search Time: "),
+        BrightMagenta.bold().paint(end_time.as_millis()),
+        BrightMagenta.bold().paint("ms "),
+        BrightMagenta.paint("🕑\n"),
+    );
 }

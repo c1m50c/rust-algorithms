@@ -2,7 +2,6 @@ use std::time::{Duration, Instant};
 use std::vec::Vec;
 
 use term_painter::{Color::*, ToStyle};
-use term_painter::Attr::*;
 use rand::Rng;
 
 
