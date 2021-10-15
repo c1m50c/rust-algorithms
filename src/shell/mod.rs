@@ -10,10 +10,7 @@ pub(crate) mod cmd;
 pub fn run() {
     loop {
         /* Todo: Get colors visible */
-        let inp = get_input(format!("{}{}",
-            BrightMagenta.bold().paint("rust-algorithms"),
-            BrightGreen.bold().paint(":$ "),
-        ));
+        let inp = get_input();
 
         cmd::run_command(inp);
     }
@@ -26,9 +23,15 @@ pub fn run() {
 /// ```rust
 /// prompt: String // Prompt to be shown before user's input.
 /// ```
-fn get_input(prompt: String) -> String {
+fn get_input() -> String {
     let mut input: String = String::new();
-    print!("{}", prompt);
+
+    print!("{}{}",
+        /* Prompt */
+        BrightMagenta.bold().paint("rust-algorithms"),
+        BrightGreen.bold().paint(":$ ")
+    );
+
     io::stdout().flush().unwrap();
     io::stdin().read_line(&mut input)
         .expect("Failed to read line.");

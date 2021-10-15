@@ -1,5 +1,5 @@
-use std::option::Option;
 use std::vec::Vec;
+
 
 /// # Binary Search
 /// Searches a sorted vector for `finding`, returning its index if found or `None` if not.
