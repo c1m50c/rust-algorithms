@@ -12,6 +12,7 @@ use rand::Rng;
 /// func: &dyn Fn(&Vec<i32>, i32) -> Option<usize> // The searching algorithm's coresponding function.
 /// ```
 pub fn run_tests(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>) {
+    /* Todo: Get actual function name, preferablly with a helper_function. */
     println!("<METHOD_NAME>\n");
 
     /* Speed Tests */
@@ -39,6 +40,8 @@ pub fn speed_test(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, length: i32) {
     println!("Search Speed Test");
 
     let vec: Vec<i32> = create_integer_vector(length, RAND_MIN, RAND_MAX);
+
+    /* Todo: Make these based off length? */
     const RAND_MIN: i32 = -2500000;
     const RAND_MAX: i32 = 2500000;
 

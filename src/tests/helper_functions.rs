@@ -3,7 +3,16 @@ use std::vec::Vec;
 use rand::Rng;
 
 
+/// # Create Integer Vector
+/// Creats a vector filled with `i32` integers.
+/// ### Parameters:
+/// ```rust
+/// length: i32 // Desired length of the returned vector.
+/// rand_min: i32 // Minimum random value assigned to each integer.
+/// rand_max: i32 // Maximum random value assigned to each integer.
+/// ```
 pub fn create_integer_vector(length: i32, rand_min: i32, rand_max: i32) -> Vec<i32> {
+    /* Todo: Multi-threading? Or anything to speed up function time. */
     let mut vec: Vec<i32> = Vec::with_capacity(length as usize);
 
     println!("Creating Vector of length '{}'...", length);
