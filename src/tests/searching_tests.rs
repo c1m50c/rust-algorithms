@@ -28,6 +28,9 @@ pub fn run_tests(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, func_name: &'st
     speed_test(func, 5000000, func_name);
     speed_test(func, 10000000, func_name);
     speed_test(func, 50000000, func_name);
+    speed_test(func, 100000000, func_name);
+    speed_test(func, 500000000, func_name);
+    speed_test(func, 1000000000, func_name);
 
     /* Assertion Test */
     assertion_test(func);

@@ -25,22 +25,49 @@ pub fn create_integer_vector(length: i32, rand_min: i32, rand_max: i32) -> Vec<i
     );
     let begin_time: Instant = Instant::now();
 
+
     /* Todo: Make parameter for threads to use? */
     /* Split length into half for each thread to loop over for their respective vector. */
-    let first_slice: i32 = length / 2;
-    let second_slice: i32 = length - first_slice;
+    let mut first_slice: i32 = length / 2;
+    let mut second_slice: i32 = length - first_slice;
+    let third_slice: i32 = first_slice / 2;
+    let fourth_slice: i32 = second_slice / 2;
+    first_slice = first_slice - third_slice;
+    second_slice = second_slice - fourth_slice;
 
-    let (t, r) = mpsc::channel(); // Create Channel for extending main vector later.
+    let (t1, r1) = mpsc::channel();
+    let (t2, r2) = mpsc::channel();
+    let (t3, r3) = mpsc::channel();
     let mut main_vec: Vec<i32> = Vec::with_capacity(length as usize);
 
-    /* Alt Thread */
-    let handle = thread::spawn(move || {
+    /* Alt Thread 1 */
+    let alt_thread_one = thread::spawn(move || {
+        let mut vec: Vec<i32> = Vec::with_capacity(second_slice as usize);
+        for _i in 0 .. fourth_slice {
+            let number: i32 = rand::thread_rng().gen_range(rand_min .. rand_max);
+            vec.push(number);
+        }
+        t1.send(vec).unwrap();
+    });
+
+    /* Alt Thread 2 */
+    let alt_thread_two = thread::spawn(move || {
+        let mut vec: Vec<i32> = Vec::with_capacity(second_slice as usize);
+        for _i in 0 .. third_slice {
+            let number: i32 = rand::thread_rng().gen_range(rand_min .. rand_max);
+            vec.push(number);
+        }
+        t2.send(vec).unwrap();
+    });
+
+    /* Alt Thread 3 */
+    let alt_thread_three = thread::spawn(move || {
         let mut vec: Vec<i32> = Vec::with_capacity(second_slice as usize);
         for _i in 0 .. second_slice {
             let number: i32 = rand::thread_rng().gen_range(rand_min .. rand_max);
             vec.push(number);
         }
-        t.send(vec).unwrap();
+        t3.send(vec).unwrap();
     });
 
     /* Main Thread */
@@ -49,14 +76,19 @@ pub fn create_integer_vector(length: i32, rand_min: i32, rand_max: i32) -> Vec<i
         main_vec.push(number);
     }
 
-    handle.join().unwrap();
-    main_vec.extend(r.recv().unwrap());
+    alt_thread_one.join().unwrap();
+    alt_thread_two.join().unwrap();
+    alt_thread_three.join().unwrap();
+    main_vec.extend(r1.recv().unwrap());
+    main_vec.extend(r2.recv().unwrap());
+    main_vec.extend(r3.recv().unwrap());
 
+    
     let elapsed_time: Duration = begin_time.elapsed();
     println!("{}{}{}{}{}{}{}{}{}",
         Green.paint("Created Vector of length "),
         Green.bold().paint("'"),
-        Green.bold().paint(length),
+        Green.bold().paint(main_vec.len()),
         Green.bold().paint("'"),
         Green.paint(" in "),
         Green.bold().paint("'"),
