@@ -6,6 +6,13 @@ use std::vec::Vec;
 use term_painter::{Color::*, ToStyle};
 
 
+/// # Run Tests
+/// Runs tests to ensure a sorting algorithm can properly sort, while also testing for speed.
+/// ### Parameters:
+/// ```rust
+/// func: &dyn Fn(&mut Vec<i32>) // Sorting Algorithm's coresponding function.
+/// func_name: &'static str // Sorting Algorithm's name.
+/// ```
 pub fn run_tests(func: &dyn Fn(&mut Vec<i32>), func_name: &'static str) {
     println!("<{}>\n", func_name);
 
@@ -19,6 +26,13 @@ pub fn run_tests(func: &dyn Fn(&mut Vec<i32>), func_name: &'static str) {
 }
 
 
+/// # Speed Test
+/// Tests a sorting algorithm's speed.
+/// ### Parameters:
+/// ```rust
+/// func: &dyn Fn(&mut Vec<i32>) // Sorting Algorithm's coresponding function.
+/// length: i32 // Desired length of sorted vector.
+/// ```
 pub fn speed_test(func: &dyn Fn(&mut Vec<i32>), length: i32) {
     println!("{}",
         Black.bold().paint("Sort Speed Test"),

@@ -69,6 +69,17 @@ pub fn create_integer_vector(length: i32, rand_min: i32, rand_max: i32) -> Vec<i
 }
 
 
+/// # Get Vector as String
+/// Formats a vector to a string.
+/// ### Example:
+/// ```rust
+/// let vec = vec![4, 5, 3, 21, 20];
+/// assert_eq!(get_vector_as_string(&vec), "[4 .. 20]");
+/// ```
+/// ### Parameters:
+/// ```rust
+/// vec: &Vec<i32> // Vector to format to get as string.
+/// ```
 pub fn get_vector_as_string(vec: &Vec<i32>) -> String {
     return format!("[{} .. {}]", vec[0], vec[vec.len() - 1]);
 }

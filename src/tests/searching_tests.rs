@@ -199,6 +199,14 @@ fn assert_compare(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, vec: Vec<i32>,
 }
 
 
+/// # Pre-sort Vector
+/// Sorts a vector, intended for use before searching through a vector.
+/// ### Parameters:
+/// ```rust
+/// vec: &mut Vec<i32> // Vector to sort.
+/// sorting_func &dyn Fn(&mut Vec<i32>) // Sorting Function.
+/// sorting_func_name: &'static str // Sorting function's name.
+/// ```
 fn pre_sort_vector(vec: &mut Vec<i32>, sorting_func: &dyn Fn(&mut Vec<i32>), sorting_func_name: &'static str) {
     let begin_time: Instant = Instant::now();
     println!("{}{}{}{}{}",
