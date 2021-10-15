@@ -28,8 +28,8 @@ pub fn run_tests(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, func_name: &'st
     speed_test(func, 10000000);
     speed_test(func, 50000000);
 
-    /* Assertion Tests */
-    assertion_tests(func);
+    /* Assertion Test */
+    assertion_test(func);
 
     println!("<{}/>", func_name);
 }
@@ -96,7 +96,13 @@ pub fn speed_test(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, length: i32) {
 }
 
 
-pub fn assertion_tests(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>) {
+/// # Assertion Test
+/// Tests the searching algorithm to ensure that it can search properly.
+/// ### Parameters:
+/// ```rust
+/// func: &dyn Fn(&Vec<i32>, i32) -> Option<usize> // Sorting Algorithm's coresponding function.
+/// ```
+pub fn assertion_test(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>) {
     /* Vec[  ], finding, index of finding */
     /* Pre-sorted for algorithms that need things to be sorted */
     let (vec_one, finding_one, index_one) = (vec![0, 1, 2, 3, 4, 5, 6], 3, 3);
@@ -119,6 +125,15 @@ pub fn assertion_tests(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>) {
 }
 
 
+/// # Assert Compare
+/// Compares the results from the searching algorithm against the known values for `finding`.
+/// ### Parameters:
+/// ```rust
+/// func: &dyn Fn(&Vec<i32>, i32) -> Option<usize> // Sorting Algorithm's coresponding function.
+/// vec: Vec<i32> // Vector to look through.
+/// finding: i32 // What the searching algorithm is trying to find.
+/// index: i32 // Known vector index of `finding`.
+/// ```
 fn assert_compare(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, vec: Vec<i32>, finding: i32, index: i32) {
     let found: Option<usize> = func(&vec, finding);
     /* Todo: Display Vector */
