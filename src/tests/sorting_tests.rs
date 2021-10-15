@@ -1,6 +1,52 @@
+use super::helper_functions::{create_integer_vector, get_vector_as_string};
+
+use std::time::{Duration, Instant};
 use std::vec::Vec;
+
+use term_painter::{Color::*, ToStyle};
 
 
 pub fn run_tests(func: &dyn Fn(&mut Vec<i32>), func_name: &'static str) {
+    println!("<{}>\n", func_name);
 
+    speed_test(func, 1000);
+    speed_test(func, 10000);
+    speed_test(func, 100000);
+    speed_test(func, 500000);
+    speed_test(func, 1000000);
+    
+    println!("<{}/>", func_name);
+}
+
+
+pub fn speed_test(func: &dyn Fn(&mut Vec<i32>), length: i32) {
+    println!("{}",
+        Black.bold().paint("Sort Speed Test"),
+    );
+    
+    let rand_min: i32 = -length;
+    let rand_max: i32 = length;
+
+    let mut vec: Vec<i32> = create_integer_vector(length, rand_min, rand_max);
+    let begin_time: Instant = Instant::now();
+
+    println!("{}{}",
+        Red.paint("Unsorted Vector: "),
+        Red.bold().paint(get_vector_as_string(&vec)),
+    );
+
+    func(&mut vec);
+    let end_time: Duration = begin_time.elapsed();
+
+    println!("{}{}",
+        Green.paint("Sorted Vector: "),
+        Green.bold().paint(get_vector_as_string(&vec)),
+    );
+
+    println!("{}{}{}{}",
+        BrightMagenta.paint("Sorting Time: "),
+        BrightMagenta.bold().paint(end_time.as_secs_f32()),
+        BrightMagenta.bold().paint("s "),
+        BrightMagenta.paint("🕑\n"),
+    );
 }

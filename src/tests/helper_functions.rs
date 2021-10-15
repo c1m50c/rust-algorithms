@@ -67,3 +67,8 @@ pub fn create_integer_vector(length: i32, rand_min: i32, rand_max: i32) -> Vec<i
 
     return main_vec;
 }
+
+
+pub fn get_vector_as_string(vec: &Vec<i32>) -> String {
+    return format!("[{} .. {}]", vec[0], vec[vec.len() - 1]);
+}
