@@ -14,9 +14,9 @@ use rand::Rng;
 /// ```rust
 /// func: &dyn Fn(&Vec<i32>, i32) -> Option<usize> // The searching algorithm's coresponding function.
 /// ```
-pub fn run_tests(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>) {
+pub fn run_tests(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, func_name: &'static str) {
     /* Todo: Get actual function name, preferablly with a helper_function. */
-    println!("<METHOD_NAME>\n");
+    println!("<{}>\n", func_name);
 
     /* Speed Tests */
     speed_test(func, 1000);
@@ -28,7 +28,7 @@ pub fn run_tests(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>) {
     speed_test(func, 10000000);
     speed_test(func, 50000000);
 
-    println!("<METHOD_NAME/>");
+    println!("<{}/>", func_name);
 }
 
 
