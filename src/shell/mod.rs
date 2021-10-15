@@ -9,9 +9,7 @@ pub(crate) mod cmd;
 /// Runs the shell.
 pub fn run() {
     loop {
-        /* Todo: Get colors visible */
         let inp = get_input();
-
         cmd::run_command(inp);
     }
 }
