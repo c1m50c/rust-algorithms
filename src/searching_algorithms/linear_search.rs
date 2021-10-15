@@ -1,9 +1,9 @@
-use std::result::Result;
+use std::option::Option;
 use std::vec::Vec;
 
 
 /// # Linear Search
-/// Searches through `vec` to find `finding`, returning its index if found, or an error if not found.
+/// Searches through `vec` to find `finding`, returning its index if found, or `None` if not.
 /// ### Parameters:
 /// ```rust
 /// vec: &Vec<i32> // Vector to search through.
@@ -16,12 +16,12 @@ use std::vec::Vec;
 /// Best Case Time Complexity == O(1)
 /// Space Complexity == O(1)
 /// ```
-pub fn linear_search(vec: &Vec<i32>, finding: i32) -> Result<usize, &'static str> {
+pub fn linear_search(vec: &Vec<i32>, finding: i32) -> Option<usize> {
     for index in 0 .. vec.len() {
         if vec[index] == finding {
-            return Ok(index);
+            return Some(index);
         }
     }
 
-    return Err("Could not find `finding`.");
+    return None;
 }
