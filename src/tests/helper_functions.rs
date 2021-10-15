@@ -8,7 +8,7 @@ use rand::Rng;
 
 
 /// # Create Integer Vector
-/// Creats a vector filled with `i32` integers.
+/// Creats a vector filled with `i32` integers, workload split across two threads.
 /// ### Parameters:
 /// ```rust
 /// length: i32 // Desired length of the returned vector.
@@ -25,6 +25,7 @@ pub fn create_integer_vector(length: i32, rand_min: i32, rand_max: i32) -> Vec<i
     );
     let begin_time: Instant = Instant::now();
 
+    /* Todo: Make parameter for threads to use? */
     /* Split length into half for each thread to loop over for their respective vector. */
     let first_slice: i32 = length / 2;
     let second_slice: i32 = length - first_slice;
