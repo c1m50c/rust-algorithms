@@ -1,5 +1,7 @@
 use std::time::{Duration, Instant};
+use std::sync::mpsc;
 use std::vec::Vec;
+use std::thread;
 
 use term_painter::{Color::*, ToStyle};
 use rand::Rng;
@@ -14,9 +16,6 @@ use rand::Rng;
 /// rand_max: i32 // Maximum random value assigned to each integer.
 /// ```
 pub fn create_integer_vector(length: i32, rand_min: i32, rand_max: i32) -> Vec<i32> {
-    /* Todo: Multi-threading? Or anything to speed up function time. */
-    let mut vec: Vec<i32> = Vec::with_capacity(length as usize);
-
     println!("{}{}{}{}{}",
         Yellow.paint("Creating Vector of length "),
         Yellow.bold().paint("'"),
@@ -26,10 +25,31 @@ pub fn create_integer_vector(length: i32, rand_min: i32, rand_max: i32) -> Vec<i
     );
     let begin_time: Instant = Instant::now();
 
-    for _i in 0 .. length {
+    /* Split length into half for each thread to loop over for their respective vector. */
+    let first_slice: i32 = length / 2;
+    let second_slice: i32 = length - first_slice;
+
+    let (t, r) = mpsc::channel(); // Create Channel for extending main vector later.
+    let mut main_vec: Vec<i32> = Vec::with_capacity(length as usize);
+
+    /* Alt Thread */
+    let handle = thread::spawn(move || {
+        let mut vec: Vec<i32> = Vec::with_capacity(second_slice as usize);
+        for _i in 0 .. second_slice {
+            let number: i32 = rand::thread_rng().gen_range(rand_min .. rand_max);
+            vec.push(number);
+        }
+        t.send(vec).unwrap();
+    });
+
+    /* Main Thread */
+    for _i in 0 .. first_slice {
         let number: i32 = rand::thread_rng().gen_range(rand_min .. rand_max);
-        vec.push(number);
+        main_vec.push(number);
     }
+
+    handle.join().unwrap();
+    main_vec.extend(r.recv().unwrap());
 
     let elapsed_time: Duration = begin_time.elapsed();
     println!("{}{}{}{}{}{}{}{}{}",
@@ -44,5 +64,5 @@ pub fn create_integer_vector(length: i32, rand_min: i32, rand_max: i32) -> Vec<i
         Green.paint(" ✅"),
     );
 
-    return vec;
+    return main_vec;
 }
