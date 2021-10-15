@@ -16,6 +16,7 @@ use std::vec::Vec;
 /// Best Case Time Complexity == O(1)
 /// Space Complexity == O(1)
 /// ```
+#[allow(dead_code)]
 pub fn linear_search(vec: &Vec<i32>, finding: i32) -> Option<usize> {
     for index in 0 .. vec.len() {
         if vec[index] == finding {

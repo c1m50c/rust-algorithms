@@ -15,6 +15,7 @@ use std::vec::Vec;
 /// Best Case Time Complexity == O(1)
 /// Space Complexity == O(1)
 /// ```
+#[allow(dead_code)]
 pub fn binary_search(vec: &Vec<i32>, finding: i32) -> Option<usize>{
     let mut left: usize = 0;
     let mut right: usize = vec.len() - 1;
