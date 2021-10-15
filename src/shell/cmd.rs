@@ -1,3 +1,13 @@
+/* Searching Algorithms */
+use super::super::searching_algorithms::binary_search::binary_search;
+use super::super::searching_algorithms::linear_search::linear_search;
+
+/* Sorting Algorithms */
+use super::super::sorting_algorithms::selection_sort::selection_sort;
+
+/* Tests */
+use super::super::tests::searching_tests::run_tests as run_searching_tests;
+
 use term_painter::{Color::*, ToStyle};
 use std::process::exit;
 
@@ -16,11 +26,26 @@ pub fn run_command(input: String) {
             println!("Help: Commands (");
             println!("help, h");
             println!("quit, exit");
+            println!("run_all, all");
+            println!("searching");
+            println!("linear_search");
             println!(")");
         }
 
         "quit" | "exit" => {
             exit(0);
+        }
+
+        "run_all" | "all" => {
+            run_searching_tests(&linear_search as &dyn Fn(&Vec<i32>, i32) -> Option<usize>, "LinearSearch");
+        }
+
+        "searching" => {
+            run_searching_tests(&linear_search as &dyn Fn(&Vec<i32>, i32) -> Option<usize>, "LinearSearch");
+        }
+
+        "linear_search" => {
+            run_searching_tests(&linear_search as &dyn Fn(&Vec<i32>, i32) -> Option<usize>, "LinearSearch");
         }
 
         _ => {
