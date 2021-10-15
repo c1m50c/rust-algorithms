@@ -1,6 +1,7 @@
 mod searching_algorithms;
 mod sorting_algorithms;
 mod tests;
+mod shell;
 
 
 use searching_algorithms::linear_search::linear_search;

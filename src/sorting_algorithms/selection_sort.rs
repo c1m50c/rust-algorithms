@@ -1,4 +1,3 @@
-use std::mem::swap;
 use std::vec::Vec;
 
 
@@ -10,6 +9,6 @@ pub fn selection_sort(vec: &mut Vec<i32>) {
                 cur_min_idx = j;
             }
         }
-        /* Todo: Swap vec[i] w/vec[cur_min_idx] */
+        vec.swap(i, cur_min_idx);
     }
 }
