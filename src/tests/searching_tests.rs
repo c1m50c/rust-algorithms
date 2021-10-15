@@ -87,8 +87,8 @@ pub fn speed_test(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, length: i32) {
 
     println!("{}{}{}{}",
         BrightMagenta.paint("Search Time: "),
-        BrightMagenta.bold().paint(end_time.as_millis()),
-        BrightMagenta.bold().paint("ms "),
+        BrightMagenta.bold().paint(end_time.as_secs_f32()),
+        BrightMagenta.bold().paint("s "),
         BrightMagenta.paint("🕑\n"),
     );
 }

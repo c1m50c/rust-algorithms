@@ -39,8 +39,8 @@ pub fn create_integer_vector(length: i32, rand_min: i32, rand_max: i32) -> Vec<i
         Green.bold().paint("'"),
         Green.paint(" in "),
         Green.bold().paint("'"),
-        Green.bold().paint(elapsed_time.as_millis()),
-        Green.bold().paint("ms'"),
+        Green.bold().paint(elapsed_time.as_secs_f32()),
+        Green.bold().paint("s'"),
         Green.paint(" ✅"),
     );
 
