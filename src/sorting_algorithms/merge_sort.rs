@@ -5,9 +5,10 @@ use std::{ops::AddAssign, vec::Vec};
 /// Deals with the merging and comparison aspect of `merge_sort`.
 /// ### Parameters:
 /// ```rust
-/// left: &[i32] // Left most slice.
-/// right: &[i32] // Right most slice.
-/// vec: &mut Vec<i32> // Vector to use for merging.
+/// where T: Ord + AddAssign + Copy
+/// left: &[T] // Left most slice.
+/// right: &[T] // Right most slice.
+/// vec: &mut Vec<T> // Vector to use for merging.
 /// ```
 #[allow(dead_code)]
 fn merge<T: Ord + AddAssign + Copy>(left: &[T], right: &[T], vec: &mut Vec<T>) {
@@ -32,7 +33,8 @@ fn merge<T: Ord + AddAssign + Copy>(left: &[T], right: &[T], vec: &mut Vec<T>) {
 /// # Merge Sort
 /// ### Parameters:
 /// ```rust
-/// vec: &mut Vec<i32> // Vector to sort.
+/// where T: Ord + AddAssign + Copy
+/// vec: &mut Vec<T> // Vector to sort.
 /// ```
 /// ### Complexities:
 /// ```py

@@ -4,7 +4,8 @@ use std::vec::Vec;
 /// # Selection Sort
 /// ### Parameters:
 /// ```rust
-/// vec: &mut Vec<i32> // Vector to sort
+/// where T: Ord
+/// vec: &mut Vec<T> // Vector to sort
 /// ```
 /// ### Complexities
 /// ```py

@@ -6,8 +6,9 @@ use std::vec::Vec;
 /// Searches through `vec` to find `finding`, returning its index if found, or `None` if not.
 /// ### Parameters:
 /// ```rust
-/// vec: &Vec<i32> // Vector to search through.
-/// finding: i32 // What we're trying to find within the Vector.
+/// where T: Eq
+/// vec: &Vec<T> // Vector to search through.
+/// finding: T // What we're trying to find within the Vector.
 /// ```
 /// ### Complexities:
 /// ```py
