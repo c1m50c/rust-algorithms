@@ -16,12 +16,9 @@ use std::vec::Vec;
 #[allow(dead_code)]
 pub fn selection_sort(vec: &mut Vec<i32>) {
     for i in 0 .. vec.len() {
-        let mut cur_min_idx: usize = i;
-        for j in i + 1 .. vec.len() {
-            if vec[j] < vec[cur_min_idx] {
-                cur_min_idx = j;
-            }
-        }
-        vec.swap(i, cur_min_idx);
+        if let Some((j, _)) = vec.iter()
+            .enumerate()
+            .skip(i)
+            .min_by_key(|x| x.1) { vec.swap(i, j); }
     }
 }

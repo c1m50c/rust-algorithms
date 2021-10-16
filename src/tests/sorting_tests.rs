@@ -26,7 +26,7 @@ pub fn run_tests(func: &dyn Fn(&mut Vec<i32>), func_name: &'static str) {
     
     /* Skip subsequent tests on slow algorithms */
     /* Note: I think some algorithms are performing incredibly poorly for seemlingly no reason, look into it */
-    if func_name == "SelectionSort" || func_name == "InsertionSort" {
+    if func_name == "SelectionSort" || func_name == "InsertionSort" || func_name == "BubbleSort" {
         println!("{}",
             Black.bold().paint("Skipping subsequent tests due to specified algorithm's speed.\n")
         );
