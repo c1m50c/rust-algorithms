@@ -23,8 +23,17 @@ pub fn run_tests(func: &dyn Fn(&mut Vec<i32>), func_name: &'static str) {
     speed_test(func, 1000);
     speed_test(func, 10000);
     speed_test(func, 100000);
-    speed_test(func, 500000);
-    speed_test(func, 1000000);
+    
+    /* Skip subsequent tests on slow algorithms */
+    /* Note: I think some algorithms are performing incredibly poorly for seemlingly no reason, look into it */
+    if func_name == "SelectionSort" || func_name == "InsertionSort" {
+        println!("{}",
+            Black.bold().paint("Skipping subsequent tests due to specified algorithm's speed.\n")
+        );
+    } else {
+        speed_test(func, 500000);
+        speed_test(func, 1000000);
+    }
     
     println!("{}{}{}",
         Blue.bold().paint("<==="),
