@@ -14,7 +14,11 @@ use term_painter::{Color::*, ToStyle};
 /// func_name: &'static str // Sorting Algorithm's name.
 /// ```
 pub fn run_tests(func: &dyn Fn(&mut Vec<i32>), func_name: &'static str) {
-    println!("<{}>\n", func_name);
+    println!("{}{}{}",
+        Blue.bold().paint("<==="),
+        Cyan.bold().paint(func_name),
+        Blue.bold().paint("===>\n"),
+    );
 
     speed_test(func, 1000);
     speed_test(func, 10000);
@@ -22,7 +26,11 @@ pub fn run_tests(func: &dyn Fn(&mut Vec<i32>), func_name: &'static str) {
     speed_test(func, 500000);
     speed_test(func, 1000000);
     
-    println!("<{}/>", func_name);
+    println!("{}{}{}",
+        Blue.bold().paint("<==="),
+        Cyan.bold().paint(func_name),
+        Blue.bold().paint("/===>"),
+    );
 }
 
 

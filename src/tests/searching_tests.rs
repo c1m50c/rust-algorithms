@@ -16,8 +16,11 @@ use rand::Rng;
 /// func: &dyn Fn(&Vec<i32>, i32) -> Option<usize> // The searching algorithm's coresponding function.
 /// ```
 pub fn run_tests(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, func_name: &'static str) {
-    /* Todo: Get actual function name, preferablly with a helper_function. */
-    println!("<{}>\n", func_name);
+    println!("{}{}{}",
+        Blue.bold().paint("<==="),
+        Cyan.bold().paint(func_name),
+        Blue.bold().paint("===>\n"),
+    );
 
     /* Speed Tests */
     speed_test(func, 1000, func_name);
@@ -35,7 +38,11 @@ pub fn run_tests(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, func_name: &'st
     /* Assertion Test */
     assertion_test(func);
 
-    println!("<{}/>", func_name);
+    println!("{}{}{}",
+        Blue.bold().paint("<==="),
+        Cyan.bold().paint(func_name),
+        Blue.bold().paint("/===>"),
+    );
 }
 
 
