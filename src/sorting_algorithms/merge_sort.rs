@@ -1,4 +1,4 @@
-use std::vec::Vec;
+use std::{ops::AddAssign, vec::Vec};
 
 
 /// # Merge
@@ -10,7 +10,7 @@ use std::vec::Vec;
 /// vec: &mut Vec<i32> // Vector to use for merging.
 /// ```
 #[allow(dead_code)]
-fn merge(left: &[i32], right: &[i32], vec: &mut Vec<i32>) {
+fn merge<T: Ord + AddAssign + Copy>(left: &[T], right: &[T], vec: &mut Vec<T>) {
     let (mut i, mut j, mut m) = (0, 0, 0);
 
     while i < left.len() && j < right.len() {
@@ -42,14 +42,14 @@ fn merge(left: &[i32], right: &[i32], vec: &mut Vec<i32>) {
 /// Space Complexity == O(n)
 /// ```
 #[allow(dead_code)]
-pub fn merge_sort(vec: &mut Vec<i32>) {
+pub fn merge_sort<T: Ord + AddAssign + Copy>(vec: &mut Vec<T>) {
     /* Adapted from https://www.hackertouch.com/merge-sort-in-rust.html */
     if vec.len() <= 1 { return; }
 
     merge_sort(&mut vec[0 .. vec.len() / 2].to_vec());
     merge_sort(&mut vec[vec.len() / 2 .. vec.len()].to_vec());
 
-    let mut temp: Vec<i32> = vec.clone();
+    let mut temp: Vec<T> = vec.clone();
     merge(&vec[0 .. vec.len() / 2], &vec[vec.len() / 2 .. vec.len()], &mut temp);
     vec.copy_from_slice(&temp);
 }

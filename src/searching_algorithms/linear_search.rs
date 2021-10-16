@@ -17,7 +17,7 @@ use std::vec::Vec;
 /// Space Complexity == O(1)
 /// ```
 #[allow(dead_code)]
-pub fn linear_search(vec: &Vec<i32>, finding: i32) -> Option<usize> {
+pub fn linear_search<T: Eq>(vec: &Vec<T>, finding: T) -> Option<usize> {
     for index in 0 .. vec.len() {
         if vec[index] == finding {
             return Some(index);

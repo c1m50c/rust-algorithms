@@ -14,7 +14,7 @@ use std::vec::Vec;
 /// Space Complexity == O(1)
 /// ```
 #[allow(dead_code)]
-pub fn selection_sort(vec: &mut Vec<i32>) {
+pub fn selection_sort<T: Ord>(vec: &mut Vec<T>) {
     for i in 0 .. vec.len() {
         if let Some((j, _)) = vec.iter()
             .enumerate()

@@ -14,7 +14,7 @@ use std::vec::Vec;
 /// Space Complexity == O(n) total, O(1) auxiliary
 /// ```
 #[allow(dead_code)]
-pub fn bubble_sort(vec: &mut Vec<i32>) {
+pub fn bubble_sort<T: Ord>(vec: &mut Vec<T>) {
     for i in 0 .. vec.len() {
         let mut swapped: bool = false;
         for j in 0 .. vec.len() - i - 1 {

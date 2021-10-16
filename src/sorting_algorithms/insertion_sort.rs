@@ -13,7 +13,7 @@ use std::vec::Vec;
 /// Space Complexity == O(n) total, O(1) auxiliary
 /// ```
 #[allow(dead_code)]
-pub fn insertion_sort(vec: &mut Vec<i32>) {
+pub fn insertion_sort<T: Ord>(vec: &mut Vec<T>) {
     for i in 1 .. vec.len() {
         let mut j: usize = i;
         while j > 0 && vec[j] < vec[j - 1] {
