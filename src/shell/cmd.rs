@@ -27,6 +27,7 @@ pub fn run_command(input: String) {
     match input.to_lowercase().as_ref() {
         "help" | "h" => {
             /* Todo: Find a more efficent way to print known commands, rather than inputing them by hand. */
+            /* Help ~ Prints commands */
             println!("Help: Commands (");
             println!("help, h");
             println!("quit, exit");
@@ -43,10 +44,12 @@ pub fn run_command(input: String) {
         }
 
         "quit" | "exit" => {
+            /* Quit ~ Quits the application */
             exit(0);
         }
 
         "run_all" | "all" => {
+            /* Run All ~ Runs all algorithms */
             run_searching_tests(&linear_search as &dyn Fn(&Vec<i32>, i32) -> Option<usize>, "LinearSearch");
             run_searching_tests(&binary_search as &dyn Fn(&Vec<i32>, i32) -> Option<usize>, "BinarySearch");
             run_sorting_tests(&selection_sort as &dyn Fn(&mut Vec<i32>), "SelectionSort");
@@ -56,11 +59,13 @@ pub fn run_command(input: String) {
         }
 
         "searching" => {
+            /* Searching ~ Runs all searching algorithms */
             run_searching_tests(&linear_search as &dyn Fn(&Vec<i32>, i32) -> Option<usize>, "LinearSearch");
             run_searching_tests(&binary_search as &dyn Fn(&Vec<i32>, i32) -> Option<usize>, "BinarySearch");
         }
 
         "sorting" => {
+            /* Sorting ~ Runs all sorting algorithms */
             run_sorting_tests(&selection_sort as &dyn Fn(&mut Vec<i32>), "SelectionSort");
             run_sorting_tests(&insertion_sort as &dyn Fn(&mut Vec<i32>), "InsertionSort");
             run_sorting_tests(&merge_sort as &dyn Fn(&mut Vec<i32>), "MergeSort");
@@ -92,6 +97,7 @@ pub fn run_command(input: String) {
         }
 
         _ => {
+            /* Invalid Command ~ Gives feedback when entering a invalid command */
             println!("{}{}{}{}{}{}{}",
                 "Command ",
                 Red.bold().paint("'"),
