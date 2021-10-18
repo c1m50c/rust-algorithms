@@ -1,3 +1,4 @@
+/* Todo: This algorithm does not work properly */
 use std::{ops::AddAssign, vec::Vec};
 
 
@@ -45,7 +46,6 @@ fn merge<T: Ord + AddAssign + Copy>(left: &[T], right: &[T], vec: &mut Vec<T>) {
 /// ```
 #[allow(dead_code)]
 pub fn merge_sort<T: Ord + AddAssign + Copy>(vec: &mut Vec<T>) {
-    /* Adapted from https://www.hackertouch.com/merge-sort-in-rust.html */
     if vec.len() <= 1 { return; }
 
     merge_sort(&mut vec[0 .. vec.len() / 2].to_vec());
