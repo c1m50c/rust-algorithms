@@ -34,6 +34,8 @@ pub fn run_tests(func: &dyn Fn(&mut Vec<i32>), func_name: &'static str) {
         speed_test(func, 500000);
         speed_test(func, 1000000);
     }
+
+    assertion_test(func);
     
     println!("{}{}{}",
         Blue.bold().paint("<==="),
@@ -80,4 +82,47 @@ pub fn speed_test(func: &dyn Fn(&mut Vec<i32>), length: i32) {
         BrightMagenta.bold().paint("s "),
         BrightMagenta.paint("🕑\n"),
     );
+}
+
+
+pub fn assertion_test(func: &dyn Fn(&mut Vec<i32>)) {
+    let (mut unsorted_1, sorted_1) = (vec![3, 4, 2, 1, 5], vec![1, 2, 3, 4, 5]);
+    let (mut unsorted_2, sorted_2) = (vec![9, 3, 2, 1, 7], vec![1, 2, 3, 7, 9]);
+    let (mut unsorted_3, sorted_3) = (vec![8, 7, 4, 3, 5], vec![3, 4, 5, 7, 8]);
+    let (mut unsorted_4, sorted_4) = (vec![4, 6, 5, 6, 0], vec![0, 4, 5, 6, 6]);
+    let (mut unsorted_5, sorted_5) = (vec![-1, -1, -3, 4, 3], vec![-3, -1, -1, 3, 4]);
+
+    println!("{}",
+        Black.bold().paint("Assertion Test"),
+    );
+
+    compare_vectors(func, &mut unsorted_1, &sorted_1);
+    compare_vectors(func, &mut unsorted_2, &sorted_2);
+    compare_vectors(func, &mut unsorted_3, &sorted_3);
+    compare_vectors(func, &mut unsorted_4, &sorted_4);
+    compare_vectors(func, &mut unsorted_5, &sorted_5);
+    println!();
+}
+
+
+fn compare_vectors(func: &dyn Fn(&mut Vec<i32>), unsorted: &mut Vec<i32>, sorted: &Vec<i32>) {
+    func(unsorted);
+
+    if unsorted == sorted {
+        println!("{}{}{}{}{}",
+            Green.bold().paint(get_vector_as_string(&unsorted)),
+            Green.paint(" == "),
+            Green.bold().paint(get_vector_as_string(&sorted)),
+            Green.paint(" = "),
+            Green.bold().paint("True ✅"),
+        );
+    } else {
+        println!("{}{}{}{}{}",
+            Red.bold().paint(get_vector_as_string(&unsorted)),
+            Red.paint(" == "),
+            Red.bold().paint(get_vector_as_string(&sorted)),
+            Red.paint(" = "),
+            Red.bold().paint("False ❌"),
+        );
+    }
 }
