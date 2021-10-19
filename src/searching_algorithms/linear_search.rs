@@ -20,9 +20,7 @@ use std::vec::Vec;
 #[allow(dead_code)]
 pub fn linear_search<T: Eq>(vec: &Vec<T>, finding: T) -> Option<usize> {
     for index in 0 .. vec.len() {
-        if vec[index] == finding {
-            return Some(index);
-        }
+        if vec[index] == finding { return Some(index); }
     }
 
     return None;
