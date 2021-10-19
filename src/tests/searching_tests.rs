@@ -246,12 +246,21 @@ fn pre_sort_vector(vec: &mut Vec<i32>, sorting_func: &dyn Fn(&mut Vec<i32>), sor
 }
 
 
+/// # Average Time Tests
+/// Calculates the average time to run this algorithm.
+/// ### Parameters:
+/// ```rust
+/// func: &dyn Fn(&Vec<i32>, i32) -> Option<usize> // Searching Algorithm's coresponding funtion.
+/// trials: i32 // How many trials to run, higher for a more precise average.
+/// ```
 pub fn average_time_test(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, trials: i32) {
     println!("{}",
         Black.bold().paint("Average Time Test"),
     );
 
     let mut times: Vec<f32> = Vec::with_capacity(trials as usize);
+
+    /* Todo: Maybe print this on test start? */
     const VECTOR_LENGTH: usize = 100000;
     const RAND_RANGE: Range<i32> = -50000 .. 50000;
 
