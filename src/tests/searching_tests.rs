@@ -260,9 +260,20 @@ pub fn average_time_test(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, trials:
 
     let mut times: Vec<f32> = Vec::with_capacity(trials as usize);
 
-    /* Todo: Maybe print this on test start? */
     const VECTOR_LENGTH: usize = 100000;
     const RAND_RANGE: Range<i32> = -50000 .. 50000;
+
+    println!("{}{}{}{}{}{}{}{}{}",
+        Blue.paint("Settings: "),
+        Blue.bold().paint("{ VECTOR_LENGTH: "),
+        Blue.bold().paint(VECTOR_LENGTH),
+        Blue.bold().paint(", RAND_RANGE: "),
+        Blue.bold().paint(RAND_RANGE.start),
+        Blue.bold().paint(" .. "),
+        Blue.bold().paint(RAND_RANGE.end),
+        Blue.bold().paint(" }"),
+        Blue.paint(" 🔧"),
+    );
 
     println!("{}{}{}{}{}",
         Yellow.paint("Starting Average Time Test with "),
