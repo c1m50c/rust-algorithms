@@ -24,20 +24,20 @@ pub fn run_tests(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, func_name: &'st
     );
 
     /* Speed Tests */
-    speed_test(func, 1000, func_name);
-    speed_test(func, 10000, func_name);
-    speed_test(func, 100000, func_name);
-    speed_test(func, 500000, func_name);
-    speed_test(func, 1000000, func_name);
-    speed_test(func, 5000000, func_name);
-    speed_test(func, 10000000, func_name);
-    speed_test(func, 50000000, func_name);
-    speed_test(func, 100000000, func_name);
-    speed_test(func, 500000000, func_name);
-    speed_test(func, 1000000000, func_name);
+    speed_test(func, 1_000, func_name);
+    speed_test(func, 10_000, func_name);
+    speed_test(func, 100_000, func_name);
+    speed_test(func, 500_000, func_name);
+    speed_test(func, 1_000_000, func_name);
+    speed_test(func, 5_000_000, func_name);
+    speed_test(func, 10_000_000, func_name);
+    speed_test(func, 50_000_000, func_name);
+    speed_test(func, 100_000_000, func_name);
+    speed_test(func, 500_000_000, func_name);
+    speed_test(func, 1_000_000_000, func_name);
 
     /* Average Time Test, Assertion Test */
-    average_time_test(func, 100000);
+    average_time_test(func, 100_000);
     assertion_test(func);
 
     println!("{}{}{}",
@@ -260,8 +260,8 @@ pub fn average_time_test(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, trials:
 
     let mut times: Vec<f32> = Vec::with_capacity(trials as usize);
 
-    const VECTOR_LENGTH: usize = 100000;
-    const RAND_RANGE: Range<i32> = -50000 .. 50000;
+    const VECTOR_LENGTH: usize = 100_000;
+    const RAND_RANGE: Range<i32> = -50_000 .. 50_000;
 
     println!("{}{}{}{}{}{}{}{}{}",
         Blue.paint("Settings: "),
@@ -293,7 +293,7 @@ pub fn average_time_test(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, trials:
         times.push(end_time.as_secs_f32());
     }
 
-    let sum: f32 = Iterator::sum(times.iter());
+    let sum: f32 = times.iter().sum();
     let average: f32 = sum / times.len() as f32;
 
     println!("{}",
