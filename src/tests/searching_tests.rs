@@ -3,6 +3,7 @@ use super::super::sorting_algorithms::merge_sort::merge_sort;
 
 use std::time::{Duration, Instant};
 use std::option::Option;
+use std::ops::Range;
 use std::vec::Vec;
 
 use term_painter::{Color::*, ToStyle};
@@ -35,7 +36,8 @@ pub fn run_tests(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, func_name: &'st
     speed_test(func, 500000000, func_name);
     speed_test(func, 1000000000, func_name);
 
-    /* Assertion Test */
+    /* Average Time Test, Assertion Test */
+    average_time_test(func, 100000);
     assertion_test(func);
 
     println!("{}{}{}",
@@ -240,5 +242,47 @@ fn pre_sort_vector(vec: &mut Vec<i32>, sorting_func: &dyn Fn(&mut Vec<i32>), sor
         Green.bold().paint(end_time.as_secs_f32()),
         Green.bold().paint("s'"),
         Green.paint(" ✅"),
+    );
+}
+
+
+pub fn average_time_test(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, trials: i32) {
+    println!("{}",
+        Black.bold().paint("Average Time Test"),
+    );
+
+    let mut times: Vec<f32> = Vec::with_capacity(trials as usize);
+    const VECTOR_LENGTH: usize = 100000;
+    const RAND_RANGE: Range<i32> = -50000 .. 50000;
+
+    println!("{}{}{}{}{}",
+        Yellow.paint("Starting Average Time Test with "),
+        Yellow.bold().paint("'"),
+        Yellow.bold().paint(trials),
+        Yellow.bold().paint("'"),
+        Yellow.paint(" trials... ⏳"),
+    );
+    
+    let mut vec: Vec<i32> = Vec::with_capacity(VECTOR_LENGTH);
+    for _i in 0 .. VECTOR_LENGTH { vec.push(rand::thread_rng().gen_range(RAND_RANGE)); }
+
+    for _i in 0 .. trials {
+        let begin_time: Instant = Instant::now();
+        func(&vec, rand::thread_rng().gen_range(RAND_RANGE));
+        let end_time: Duration = begin_time.elapsed();
+        times.push(end_time.as_secs_f32());
+    }
+
+    let sum: f32 = Iterator::sum(times.iter());
+    let average: f32 = sum / times.len() as f32;
+
+    println!("{}",
+        Green.bold().paint("Completed Average Time Test! ✅"),
+    );
+
+    println!("{}{}{}",
+        Magenta.paint("Average Time Elapsed: "),
+        Magenta.bold().paint(average),
+        Magenta.bold().paint("s 🕑\n"),
     );
 }
