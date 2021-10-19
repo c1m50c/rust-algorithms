@@ -20,9 +20,9 @@ pub fn run_tests(func: &dyn Fn(&mut Vec<i32>), func_name: &'static str) {
         Blue.bold().paint("===>\n"),
     );
 
-    speed_test(func, 1000);
-    speed_test(func, 10000);
-    speed_test(func, 100000);
+    speed_test(func, 1_000);
+    speed_test(func, 10_000);
+    speed_test(func, 100_000);
     
     /* Skip subsequent tests on slow algorithms */
     /* Note: I think some algorithms are performing incredibly poorly for seemlingly no reason, look into it */
@@ -31,8 +31,8 @@ pub fn run_tests(func: &dyn Fn(&mut Vec<i32>), func_name: &'static str) {
             Black.bold().paint("Skipping subsequent tests due to specified algorithm's speed.\n")
         );
     } else {
-        speed_test(func, 500000);
-        speed_test(func, 1000000);
+        speed_test(func, 50_0000);
+        speed_test(func, 1_000_000);
     }
 
     assertion_test(func);
