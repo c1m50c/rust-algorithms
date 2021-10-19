@@ -1,9 +1,11 @@
 use super::helper_functions::{create_integer_vector, get_vector_as_string};
 
 use std::time::{Duration, Instant};
+use std::ops::Range;
 use std::vec::Vec;
 
 use term_painter::{Color::*, ToStyle};
+use rand::Rng;
 
 
 /// # Run Tests
@@ -35,6 +37,7 @@ pub fn run_tests(func: &dyn Fn(&mut Vec<i32>), func_name: &'static str) {
         speed_test(func, 1_000_000);
     }
 
+    average_time_test(func, 100_000);
     assertion_test(func);
     
     println!("{}{}{}",
@@ -125,4 +128,59 @@ fn compare_vectors(func: &dyn Fn(&mut Vec<i32>), unsorted: &mut Vec<i32>, sorted
             Red.bold().paint("False ❌"),
         );
     }
+}
+
+
+pub fn average_time_test(func: &dyn Fn(&mut Vec<i32>), trials: i32) {
+    println!("{}",
+        Black.bold().paint("Average Time Test"),
+    );
+
+    let mut times: Vec<f32> = Vec::with_capacity(trials as usize);
+
+    const VECTOR_LENGTH: usize = 1_000;
+    const RAND_RANGE: Range<i32> = -500 .. 500;
+
+    println!("{}{}{}{}{}{}{}{}{}",
+        Blue.paint("Settings: "),
+        Blue.bold().paint("{ VECTOR_LENGTH: "),
+        Blue.bold().paint(VECTOR_LENGTH),
+        Blue.bold().paint(", RAND_RANGE: "),
+        Blue.bold().paint(RAND_RANGE.start),
+        Blue.bold().paint(" .. "),
+        Blue.bold().paint(RAND_RANGE.end),
+        Blue.bold().paint(" }"),
+        Blue.paint(" 🔧"),
+    );
+
+    println!("{}{}{}{}{}",
+        Yellow.paint("Starting Average Time Test with "),
+        Yellow.bold().paint("'"),
+        Yellow.bold().paint(trials),
+        Yellow.bold().paint("'"),
+        Yellow.paint(" trials... ⏳"),
+    );
+
+    for _i in 0 .. trials {
+        let mut vec: Vec<i32> = Vec::with_capacity(VECTOR_LENGTH);
+        for _i in 0 .. VECTOR_LENGTH { vec.push(rand::thread_rng().gen_range(RAND_RANGE)); }
+        
+        let begin_time: Instant = Instant::now();
+        func(&mut vec);
+        let end_time: Duration = begin_time.elapsed();
+        times.push(end_time.as_secs_f32());
+    }
+
+    let sum: f32 = times.iter().sum();
+    let average: f32 = sum / times.len() as f32;
+
+    println!("{}",
+        Green.bold().paint("Completed Average Time Test! ✅"),
+    );
+
+    println!("{}{}{}",
+        Magenta.paint("Average Running Time: "),
+        Magenta.bold().paint(average),
+        Magenta.bold().paint("s 🕑\n"),
+    );
 }
