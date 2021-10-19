@@ -121,7 +121,7 @@ pub fn speed_test(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, length: i32, f
 /// func: &dyn Fn(&Vec<i32>, i32) -> Option<usize> // Sorting Algorithm's coresponding function.
 /// ```
 pub fn assertion_test(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>) {
-    /* Vec[  ], finding, index of finding */
+    /* ( Vec[  ], finding, index of finding ) */
     /* Pre-sorted for algorithms that need things to be sorted */
     let (vec_one, finding_one, index_one) = (vec![0, 1, 2, 3, 4, 5, 6], 3, 3);
     let (vec_two, finding_two, index_two) = (vec![3, 3, 4, 5, 7, 8, 9], 9, 6);
@@ -301,7 +301,7 @@ pub fn average_time_test(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, trials:
     );
 
     println!("{}{}{}",
-        Magenta.paint("Average Time Elapsed: "),
+        Magenta.paint("Average Running Time: "),
         Magenta.bold().paint(average),
         Magenta.bold().paint("s 🕑\n"),
     );
