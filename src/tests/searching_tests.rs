@@ -255,6 +255,7 @@ fn pre_sort_vector(vec: &mut Vec<i32>, sorting_func: &dyn Fn(&mut Vec<i32>), sor
 /// ### Parameters:
 /// ```rust
 /// func: &dyn Fn(&Vec<i32>, i32) -> Option<usize> // Searching Algorithm's coresponding funtion.
+/// func_name: &'static str // Searching algorithm's name.
 /// trials: i32 // How many trials to run, higher for a more precise average.
 /// ```
 pub fn average_time_test(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, func_name: &'static str, trials: i32) {
@@ -289,6 +290,8 @@ pub fn average_time_test(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, func_na
     
     let mut vec: Vec<i32> = Vec::with_capacity(VECTOR_LENGTH);
     for _i in 0 .. VECTOR_LENGTH { vec.push(rand::thread_rng().gen_range(RAND_RANGE)); }
+
+    /* Presort Vector if Searching Algorithm requires it. */
     if func_name == "BinarySearch" {
         pre_sort_vector(&mut vec, &merge_sort as &dyn Fn(&mut Vec<i32>), "MergeSort");
     }
