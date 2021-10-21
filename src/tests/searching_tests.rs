@@ -33,11 +33,15 @@ pub fn run_tests(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, func_name: &'st
     speed_test(func, 10_000_000, func_name);
     speed_test(func, 50_000_000, func_name);
     speed_test(func, 100_000_000, func_name);
-    speed_test(func, 500_000_000, func_name);
-    speed_test(func, 1_000_000_000, func_name);
+
+    /* Skip slow algorithms / ones that require pre-sorting */
+    if func_name != "BinarySearch" {
+        speed_test(func, 500_000_000, func_name);
+        speed_test(func, 1_000_000_000, func_name);
+    }
 
     /* Average Time Test, Assertion Test */
-    average_time_test(func, 100_000);
+    average_time_test(func, func_name, 100_000);
     assertion_test(func);
 
     println!("{}{}{}",
@@ -253,7 +257,7 @@ fn pre_sort_vector(vec: &mut Vec<i32>, sorting_func: &dyn Fn(&mut Vec<i32>), sor
 /// func: &dyn Fn(&Vec<i32>, i32) -> Option<usize> // Searching Algorithm's coresponding funtion.
 /// trials: i32 // How many trials to run, higher for a more precise average.
 /// ```
-pub fn average_time_test(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, trials: i32) {
+pub fn average_time_test(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, func_name: &'static str, trials: i32) {
     println!("{}",
         Black.bold().paint("Average Time Test"),
     );
@@ -285,6 +289,9 @@ pub fn average_time_test(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, trials:
     
     let mut vec: Vec<i32> = Vec::with_capacity(VECTOR_LENGTH);
     for _i in 0 .. VECTOR_LENGTH { vec.push(rand::thread_rng().gen_range(RAND_RANGE)); }
+    if func_name == "BinarySearch" {
+        pre_sort_vector(&mut vec, &merge_sort as &dyn Fn(&mut Vec<i32>), "MergeSort");
+    }
 
     for _i in 0 .. trials {
         let begin_time: Instant = Instant::now();

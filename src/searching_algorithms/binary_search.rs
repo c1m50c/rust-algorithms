@@ -1,4 +1,3 @@
-/* Todo: This algorithm does not work properly, possibly due to `merge_sort`'s issue */
 use std::vec::Vec;
 
 
@@ -19,13 +18,12 @@ use std::vec::Vec;
 /// ```
 #[allow(dead_code)]
 pub fn binary_search<T: Ord + Eq>(vec: &Vec<T>, finding: T) -> Option<usize>{
-    let mut left: usize = 0;
-    let mut right: usize = vec.len() - 1;
+    let (mut left, mut right) = (0, vec.len());
 
-    while left <= right {
-        let middle: usize = (left + right) / 2;
+    while left < right {
+        let middle: usize = left + (right - left) / 2;
         if finding == vec[middle] { return Some(middle); }
-        else if finding < vec[middle] { right = middle - 1; }
+        else if finding < vec[middle] { right = middle; }
         else { left = middle + 1; }
     }
 
