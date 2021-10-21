@@ -1,40 +1,67 @@
-/* Todo: This algorithm does not work properly */
-use std::{ops::AddAssign, vec::Vec};
+use std::vec::Vec;
 
 
 /// # Merge
 /// Deals with the merging and comparison aspect of `merge_sort`.
 /// ### Parameters:
 /// ```rust
-/// where T: Ord + AddAssign + Copy
-/// left: &[T] // Left most slice.
-/// right: &[T] // Right most slice.
-/// vec: &mut Vec<T> // Vector to use for merging.
 /// ```
 #[allow(dead_code)]
-fn merge<T: Ord + AddAssign + Copy>(left: &[T], right: &[T], vec: &mut Vec<T>) {
-    let (mut i, mut j, mut m) = (0, 0, 0);
+fn merge<T: Ord + Copy>(left: usize, middle: usize, right: usize, vec: &mut Vec<T>) {
+    /* Based on: https://github.com/TheAlgorithms/Rust/blob/master/src/sorting/merge_sort.rs */
 
-    while i < left.len() && j < right.len() {
-        if left[i] < right[j] {
-            vec[m] = left[i];
-            i += 1;
-        } else {
-            vec[m] = right[j];
-            j += 1;
+    /* Temporay vectors for each half in `vec` */
+    let (mut left_vec, mut right_vec) = (Vec::new(), Vec::new());
+    for v in vec.iter().take(middle + 1).skip(left) { left_vec.push(*v); }
+    for v in vec.iter().take(right + 1).skip(middle + 1) { right_vec.push(*v); }
+
+    /* Track positions while merging */
+    let (mut l, mut r, mut v) = (0, 0, left);
+
+    /* Pick smaller elements one by one from both halves */
+    while l < left_vec.len() && r < right_vec.len() {
+        if left_vec[l] < right_vec[r] {
+            vec[v] = left_vec[l];
+            l += 1;
         }
-        m += 1;
+        else {
+            vec[v] = right_vec[r];
+            r += 1
+        }
+
+        v += 1;
     }
 
-    if i < left.len() { vec[m..].copy_from_slice(&left[i..]); }
-    if j < right.len() { vec[m..].copy_from_slice(&right[j..]); }
+    /* Finish up putting away all elements in left half */
+    while l < left_vec.len() {
+        vec[v] = left_vec[l];
+        l += 1;
+        v += 1;
+    }
+
+    /* Finish up putting away all elements in right half */
+    while r < right_vec.len() {
+        vec[v] = right_vec[r];
+        r += 1;
+        v += 1;
+    }
+}
+
+
+fn merge_sort_lr<T: Ord + Copy>(vec: &mut Vec<T>, left: usize, right: usize) {
+    if left < right {
+        let middle: usize = left + (right - left) / 2;
+        merge_sort_lr(vec, left, middle);
+        merge_sort_lr(vec, middle + 1, right);
+        merge(left, middle, right, vec);
+    }
 }
 
 
 /// # Merge Sort
 /// ### Parameters:
 /// ```rust
-/// where T: Ord + AddAssign + Copy
+/// where T: Ord + Copy
 /// vec: &mut Vec<T> // Vector to sort.
 /// ```
 /// ### Complexities:
@@ -45,13 +72,6 @@ fn merge<T: Ord + AddAssign + Copy>(left: &[T], right: &[T], vec: &mut Vec<T>) {
 /// Space Complexity == O(n)
 /// ```
 #[allow(dead_code)]
-pub fn merge_sort<T: Ord + AddAssign + Copy>(vec: &mut Vec<T>) {
-    if vec.len() <= 1 { return; }
-
-    merge_sort(&mut vec[0 .. vec.len() / 2].to_vec());
-    merge_sort(&mut vec[vec.len() / 2 .. vec.len()].to_vec());
-
-    let mut temp: Vec<T> = vec.clone();
-    merge(&vec[0 .. vec.len() / 2], &vec[vec.len() / 2 .. vec.len()], &mut temp);
-    vec.copy_from_slice(&temp);
+pub fn merge_sort<T: Ord + Copy>(vec: &mut Vec<T>) {
+    if vec.len() > 1 { merge_sort_lr(vec, 0, vec.len() - 1); }
 }
