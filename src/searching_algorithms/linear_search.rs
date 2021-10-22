@@ -3,7 +3,7 @@ use std::vec::Vec;
 
 
 /// # Linear Search
-/// Searches through `vec` to find `finding`, returning its index if found, or `None` if not.
+/// Searches through `vec` to find `finding`, returning its index as a `Some` if found, or `None` if not.
 /// ### Parameters:
 /// ```rust
 /// where T: Eq

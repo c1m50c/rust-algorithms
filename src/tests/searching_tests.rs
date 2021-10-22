@@ -15,6 +15,7 @@ use rand::Rng;
 /// ### Parameters:
 /// ```rust
 /// func: &dyn Fn(&Vec<i32>, i32) -> Option<usize> // The searching algorithm's coresponding function.
+/// func_name: &'static str // Searching Algorithm's Name.
 /// ```
 pub fn run_tests(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, func_name: &'static str) {
     println!("{}{}{}",
@@ -58,6 +59,7 @@ pub fn run_tests(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, func_name: &'st
 /// ```rust
 /// func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>  // The searching algorithm's coresponding function.
 /// length: i32 // Desired len() of testing Vector.
+/// func_name: &'static str // Searching Algorithm's Name.
 /// ```
 pub fn speed_test(func: &dyn Fn(&Vec<i32>, i32) -> Option<usize>, length: i32, func_name: &'static str) {
     println!("{}",

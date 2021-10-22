@@ -2,7 +2,7 @@ use std::vec::Vec;
 
 
 /// # Binary Search
-/// Searches a sorted vector for `finding`, returning its index if found or `None` if not.
+/// Searches a **sorted** vector for `finding`, returning its index as `Some` if found or `None` if not.
 /// ### Parameters:
 /// ```rust
 /// where T: Ord + Eq
