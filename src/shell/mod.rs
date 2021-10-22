@@ -16,11 +16,7 @@ pub fn run() {
 
 
 /// # Get Input
-/// Gets user input from the terminal.
-/// ### Paramaters:
-/// ```rust
-/// prompt: String // Prompt to be shown before user's input.
-/// ```
+/// Gets user input from the terminal, prompt hardcoded to **rust-algorithms:$**.
 fn get_input() -> String {
     let mut input: String = String::new();
 

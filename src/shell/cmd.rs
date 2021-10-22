@@ -20,26 +20,24 @@ use std::process::exit;
 /// Looks over the `input` for a valid command to run.
 /// ### Parameters:
 /// ```rust
-/// input: String // String with the command you want to run.
+/// input: String // String with the command you want to run, not case-sensitive.
 /// ```
 pub fn run_command(input: String) {
-    /* Todo: This is really spaghetti, find a simpler way to do this. */
     match input.to_lowercase().as_ref() {
         "help" | "h" => {
-            /* Todo: Find a more efficent way to print known commands, rather than inputing them by hand. */
             /* Help ~ Prints commands */
             println!("Help: Commands (");
-            println!("help, h");
-            println!("quit, exit");
-            println!("run_all, all");
-            println!("searching");
-            println!("sorting");
-            println!("linear_search");
-            println!("binary_search");
-            println!("selection_sort");
-            println!("insertion_sort");
-            println!("merge_sort");
-            println!("bubble_sort");
+            println!(". help, h {}", Cyan.paint("# Prints every command keyword."));
+            println!(". quit, exit {}", Cyan.paint("# Quits the application."));
+            println!(". run_all, all {}", Cyan.paint("# Runs every algorithm."));
+            println!(". searching {}", Cyan.paint("# Runs every searching algorithm."));
+            println!(". sorting {}", Cyan.paint("# Runs every sorting algorithm."));
+            println!(". linear_search {}", Cyan.paint("# Runs the `linear_search` algorithm."));
+            println!(". binary_search {}", Cyan.paint("# Runs the `binary_search` algorithm."));
+            println!(". selection_sort {}", Cyan.paint("# Runs the `selection_sort` algorithm."));
+            println!(". insertion_sort {}", Cyan.paint("# Runs the `insertion_sort` algorithm."));
+            println!(". merge_sort {}", Cyan.paint("# Runs the `merge_sort` algorithm."));
+            println!(". bubble_sort {}", Cyan.paint("# Runs the `bubble_sort` algorithm."));
             println!(")");
         }
 
@@ -73,26 +71,32 @@ pub fn run_command(input: String) {
         }
 
         "linear_search" => {
+            /* LinearSearch ~ Runs the `linear_search` algorithm. */
             run_searching_tests(&linear_search as &dyn Fn(&Vec<i32>, i32) -> Option<usize>, "LinearSearch");
         }
 
         "binary_search" => {
+            /* BinarySearch ~ Runs the `binary_search` algorithm. */
             run_searching_tests(&binary_search as &dyn Fn(&Vec<i32>, i32) -> Option<usize>, "BinarySearch");
         }
 
         "selection_sort" => {
+            /* SelectionSort ~ Runs the `selection_sort` algorithm. */
             run_sorting_tests(&selection_sort as &dyn Fn(&mut Vec<i32>), "SelectionSort");
         }
 
         "insertion_sort" => {
+            /* InsertionSort ~ Runs the `insertion_sort` algorithm. */
             run_sorting_tests(&insertion_sort as &dyn Fn(&mut Vec<i32>), "InsertionSort");
         }
 
         "merge_sort" => {
+            /* MergeSort ~ Runs the `merge_sort` algorithm. */
             run_sorting_tests(&merge_sort as &dyn Fn(&mut Vec<i32>), "MergeSort");
         }
 
         "bubble_sort" => {
+            /* BubbleSort ~ Runs the `bubble_sort` algorithm. */
             run_sorting_tests(&bubble_sort as &dyn Fn(&mut Vec<i32>), "BubbleSort");
         }
 
