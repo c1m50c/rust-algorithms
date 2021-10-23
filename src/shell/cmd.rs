@@ -7,6 +7,7 @@ use super::super::sorting_algorithms::selection_sort::selection_sort;
 use super::super::sorting_algorithms::insertion_sort::insertion_sort;
 use super::super::sorting_algorithms::merge_sort::merge_sort;
 use super::super::sorting_algorithms::bubble_sort::bubble_sort;
+use super::super::sorting_algorithms::quick_sort::quick_sort;
 
 /* Tests */
 use super::super::tests::searching_tests::run_tests as run_searching_tests;
@@ -38,6 +39,7 @@ pub fn run_command(input: String) {
             println!(". insertion_sort {}", Cyan.paint("# Runs the `insertion_sort` algorithm."));
             println!(". merge_sort {}", Cyan.paint("# Runs the `merge_sort` algorithm."));
             println!(". bubble_sort {}", Cyan.paint("# Runs the `bubble_sort` algorithm."));
+            println!(". quick_sort {}", Cyan.paint("# Runs the `quick_sort` algorithm."));
             println!(")");
         }
 
@@ -54,6 +56,7 @@ pub fn run_command(input: String) {
             run_sorting_tests(&insertion_sort as &dyn Fn(&mut Vec<i32>), "InsertionSort");
             run_sorting_tests(&merge_sort as &dyn Fn(&mut Vec<i32>), "MergeSort");
             run_sorting_tests(&bubble_sort as &dyn Fn(&mut Vec<i32>), "BubbleSort");
+            run_sorting_tests(&quick_sort as &dyn Fn(&mut Vec<i32>), "QuickSort");
         }
 
         "searching" => {
@@ -68,6 +71,7 @@ pub fn run_command(input: String) {
             run_sorting_tests(&insertion_sort as &dyn Fn(&mut Vec<i32>), "InsertionSort");
             run_sorting_tests(&merge_sort as &dyn Fn(&mut Vec<i32>), "MergeSort");
             run_sorting_tests(&bubble_sort as &dyn Fn(&mut Vec<i32>), "BubbleSort");
+            run_sorting_tests(&quick_sort as &dyn Fn(&mut Vec<i32>), "QuickSort");
         }
 
         "linear_search" => {
@@ -98,6 +102,11 @@ pub fn run_command(input: String) {
         "bubble_sort" => {
             /* BubbleSort ~ Runs the `bubble_sort` algorithm. */
             run_sorting_tests(&bubble_sort as &dyn Fn(&mut Vec<i32>), "BubbleSort");
+        }
+
+        "quick_sort" => {
+            /* QuickSort ~ Runs the `quick_sort` algorithm. */
+            run_sorting_tests(&quick_sort as &dyn Fn(&mut Vec<i32>), "QuickSort");
         }
 
         _ => {
