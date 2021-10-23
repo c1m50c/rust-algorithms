@@ -2,6 +2,15 @@
 use std::vec::Vec;
 
 
+/// # Partition
+/// Handles the sorting aspect of `quick_sort` & `quick_sort_lr`.
+/// ### Parameters:
+/// ```rust
+/// where T: Ord
+/// vec: &mut Vec<T> // Vector to create partition from.
+/// left: isize // Start position of portion to create partition from.
+/// right: isize // End position of portion to create partition from.
+/// ```
 fn partition<T: Ord>(vec: &mut Vec<T>, left: isize, right: isize) -> isize {
     let pivot: usize = right as usize;
     let (mut i, mut j) = (left - 1, right);
@@ -22,6 +31,22 @@ fn partition<T: Ord>(vec: &mut Vec<T>, left: isize, right: isize) -> isize {
 }
 
 
+/// # Quick Sort *LeftRight*
+/// Similar to `quick_sort` with added control of the portion of the vector to sort.
+/// ### Parameters:
+/// ```rust
+/// where T: Ord
+/// vec: &mut Vec<T> // Vector to sort.
+/// left: isize // Start of sorting portion.
+/// right: isize // End of sorting portion.
+/// ```
+/// ### Complexities:
+/// ```py
+/// Worst Case Time Complexity == O(n^2)
+/// Average Case Time Complexity == O(n log n)
+/// Best Case Time Complexity == O(n log n)
+/// Space Complexity == O(n)
+/// ```
 fn quick_sort_lr<T: Ord>(vec: &mut Vec<T>, left: isize, right: isize) {
     if left < right {
         let part: isize = partition(vec, left, right);
@@ -31,7 +56,19 @@ fn quick_sort_lr<T: Ord>(vec: &mut Vec<T>, left: isize, right: isize) {
 }
 
 
+/// # Quick Sort
+/// ### Parameters:
+/// ```rust
+/// where T: Ord
+/// vec: &mut Vec<T> // Vector to sort.
+/// ```
+/// ### Complexities:
+/// ```py
+/// Worst Case Time Complexity == O(n^2)
+/// Average Case Time Complexity == O(n log n)
+/// Best Case Time Complexity == O(n log n)
+/// Space Complexity == O(n)
+/// ```
 pub fn quick_sort<T: Ord>(vec: &mut Vec<T>) {
-    let vec_len: usize = vec.len();
-    quick_sort_lr(vec, 0, (vec_len - 1) as isize);
+    quick_sort_lr(vec, 0, (vec.len() - 1) as isize);
 }
