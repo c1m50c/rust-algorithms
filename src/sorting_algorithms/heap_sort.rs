@@ -2,6 +2,14 @@
 use std::vec::Vec;
 
 
+/// # Move Down
+/// Move the element at `root` down until `slice` is a max heap again.
+/// ### Parameters:
+/// ```rust
+/// where T: Ord
+/// slice: &mut [T] // Slice to make a max heap again.
+/// mut root: usize // Element root.
+/// ```
 fn move_down<T: Ord>(slice: &mut [T], mut root: usize) {
     let last: usize = slice.len() - 1;
 
@@ -21,6 +29,13 @@ fn move_down<T: Ord>(slice: &mut [T], mut root: usize) {
 }
 
 
+/// # Create Heap
+/// Creates a heap within the given vector.
+/// ### Parameters:
+/// ```rust
+/// where T: Ord
+/// vec: &mut Vec<T> // Vector to make a heap out of.
+/// ```
 fn create_heap<T: Ord>(vec: &mut Vec<T>) {
     let last_parent: usize  = (vec.len() - 2) / 2;
     for i in (0 ..=last_parent).rev() {
@@ -29,6 +44,19 @@ fn create_heap<T: Ord>(vec: &mut Vec<T>) {
 }
 
 
+/// # Heap Sort
+/// ### Parameters:
+/// ```rust
+/// where T: Ord
+/// vec: &mut Vec<T> // Vector to sort.
+/// ```
+/// ### Complexities:
+/// ```py
+/// Worst Case Time Complexity: O(n log n)
+/// Average Case Time Complexity: O(n log n)
+/// Best Case Time Complexity: O(n)
+/// Space Complexity: O(n) total, O(1) auxiliary
+/// ```
 pub fn heap_sort<T: Ord>(vec: &mut Vec<T>) {
     let vec_len: usize = vec.len();
     if vec_len <= 1 { return; }
