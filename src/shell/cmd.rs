@@ -8,6 +8,7 @@ use super::super::sorting_algorithms::insertion_sort::insertion_sort;
 use super::super::sorting_algorithms::merge_sort::merge_sort;
 use super::super::sorting_algorithms::bubble_sort::bubble_sort;
 use super::super::sorting_algorithms::quick_sort::quick_sort;
+use super::super::sorting_algorithms::heap_sort::heap_sort;
 
 /* Tests */
 use super::super::tests::searching_tests::run_tests as run_searching_tests;
@@ -40,6 +41,7 @@ pub fn run_command(input: String) {
             println!(". merge_sort {}", Cyan.paint("# Runs the `merge_sort` algorithm."));
             println!(". bubble_sort {}", Cyan.paint("# Runs the `bubble_sort` algorithm."));
             println!(". quick_sort {}", Cyan.paint("# Runs the `quick_sort` algorithm."));
+            println!(". heap_sort {}", Cyan.paint("# Runs the `heap_sort` algorithm."));
             println!(")");
         }
 
@@ -57,6 +59,7 @@ pub fn run_command(input: String) {
             run_sorting_tests(&merge_sort as &dyn Fn(&mut Vec<i32>), "MergeSort");
             run_sorting_tests(&bubble_sort as &dyn Fn(&mut Vec<i32>), "BubbleSort");
             run_sorting_tests(&quick_sort as &dyn Fn(&mut Vec<i32>), "QuickSort");
+            run_sorting_tests(&heap_sort as &dyn Fn(&mut Vec<i32>), "HeapSort");
         }
 
         "searching" => {
@@ -72,6 +75,7 @@ pub fn run_command(input: String) {
             run_sorting_tests(&merge_sort as &dyn Fn(&mut Vec<i32>), "MergeSort");
             run_sorting_tests(&bubble_sort as &dyn Fn(&mut Vec<i32>), "BubbleSort");
             run_sorting_tests(&quick_sort as &dyn Fn(&mut Vec<i32>), "QuickSort");
+            run_sorting_tests(&heap_sort as &dyn Fn(&mut Vec<i32>), "HeapSort");
         }
 
         "linear_search" => {
@@ -107,6 +111,11 @@ pub fn run_command(input: String) {
         "quick_sort" => {
             /* QuickSort ~ Runs the `quick_sort` algorithm. */
             run_sorting_tests(&quick_sort as &dyn Fn(&mut Vec<i32>), "QuickSort");
+        }
+
+        "heap_sort" => {
+            /* HeapSort ~ Runs the `heap_sort` algorithm. */
+            run_sorting_tests(&heap_sort as &dyn Fn(&mut Vec<i32>), "HeapSort");
         }
 
         _ => {
