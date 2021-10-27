@@ -1,5 +1,5 @@
 # **📚 rust-algorithms**
-Some algorithms implemented using Rust.
+Library containing various algorithms implemented with a Rust counter-part.
 ## **Running**
 You can test the algorithms to ensure they work by using `cargo test`, an example of it's usage is shown below.
 ```bash
