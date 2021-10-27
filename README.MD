@@ -1,10 +1,11 @@
-# **📚 rust-algorithms**
+# **rust-algorithms**
 Some algorithms implemented using Rust.
-## **Running**
-You can test the algorithms to ensure they work by using `cargo test`, an example of it's usage is shown below.
+
+## Running
 ```bash
-$ cd rust-algorithms # Change directory to repository.
-$ cargo test # Run the `cargo test` command to run the library's tests.
+$ cd rust-algorithms
+$ cargo run --release # Run it in `release` mode for optimized speed.
+rust-algorithms:$ linear_search
+<===LinearSearch===>
 ...
-test result: ok. # If things go well all tests should pass.
 ```
