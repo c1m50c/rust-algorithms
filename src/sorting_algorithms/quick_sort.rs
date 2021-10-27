@@ -1,17 +1,9 @@
-/* Based around: https://github.com/TheAlgorithms/Rust/blob/master/src/sorting/quick_sort.rs */
 use std::vec::Vec;
 
 
-/// # Partition
-/// Handles the sorting aspect of `quick_sort` & `quick_sort_lr`.
-/// ### Parameters:
-/// ```rust
-/// where T: Ord
-/// vec: &mut Vec<T> // Vector to create partition from.
-/// left: isize // Start position of portion to create partition from.
-/// right: isize // End position of portion to create partition from.
-/// ```
-fn partition<T: Ord>(vec: &mut Vec<T>, left: isize, right: isize) -> isize {
+/// Handles the sorting aspect of `quick_sort`.
+#[allow(dead_code)]
+fn partition<T: PartialOrd>(vec: &mut Vec<T>, left: isize, right: isize) -> isize {
     let pivot: usize = right as usize;
     let (mut i, mut j) = (left - 1, right);
 
@@ -25,50 +17,51 @@ fn partition<T: Ord>(vec: &mut Vec<T>, left: isize, right: isize) -> isize {
         if i >= j { break; }
         else { vec.swap(i as usize, j as usize); }
     }
-    
-    vec.swap(i as usize, pivot as usize);
+
+    vec.swap(i as usize, pivot);
     return i;
 }
 
 
-/// # Quick Sort *LeftRight*
-/// Similar to `quick_sort` with added control of the portion of the vector to sort.
-/// ### Parameters:
-/// ```rust
-/// where T: Ord
-/// vec: &mut Vec<T> // Vector to sort.
-/// left: isize // Start of sorting portion.
-/// right: isize // End of sorting portion.
-/// ```
-/// ### Complexities:
+/// ## Complexities:
 /// ```py
-/// Worst Case Time Complexity == O(n^2)
+/// Worst Case Time Complexity == O(n * n)
 /// Average Case Time Complexity == O(n log n)
 /// Best Case Time Complexity == O(n log n)
 /// Space Complexity == O(n)
 /// ```
-fn quick_sort_lr<T: Ord>(vec: &mut Vec<T>, left: isize, right: isize) {
+#[allow(dead_code)]
+pub fn quick_sort<T: PartialOrd>(vec: &mut Vec<T>, left: isize, right: isize) {
     if left < right {
         let part: isize = partition(vec, left, right);
-        quick_sort_lr(vec, left, part - 1);
-        quick_sort_lr(vec, part + 1, right);
+        quick_sort(vec, left, part - 1);
+        quick_sort(vec, part + 1, right);
     }
 }
 
 
-/// # Quick Sort
-/// ### Parameters:
-/// ```rust
-/// where T: Ord
-/// vec: &mut Vec<T> // Vector to sort.
-/// ```
-/// ### Complexities:
-/// ```py
-/// Worst Case Time Complexity == O(n^2)
-/// Average Case Time Complexity == O(n log n)
-/// Best Case Time Complexity == O(n log n)
-/// Space Complexity == O(n)
-/// ```
-pub fn quick_sort<T: Ord>(vec: &mut Vec<T>) {
-    quick_sort_lr(vec, 0, (vec.len() - 1) as isize);
+#[cfg(test)]
+mod tests {
+    use super::quick_sort;
+
+    #[test]
+    fn sort_integer_vector() {
+        let mut vec: Vec<i32> = vec![0, 3, 1, 5, 6, 8, 7];
+        quick_sort(&mut vec, 0, 6);
+        assert_eq!(vec, vec![0, 1, 3, 5, 6, 7, 8]);
+    }
+
+    #[test]
+    fn sort_unsigned_vector() {
+        let mut vec: Vec<u32> = vec![4, 3, 2, 6, 3, 1, 9];
+        quick_sort(&mut vec, 0, 6);
+        assert_eq!(vec, vec![1, 2, 3, 3, 4, 6, 9]);
+    }
+
+    #[test]
+    fn sort_floating_vector() {
+        let mut vec: Vec<f32> = vec![0.5, 1.32, 1.11, 5.72, 4.20, 1.337, 8.04];
+        quick_sort(&mut vec, 0, 6);
+        assert_eq!(vec, vec![0.5, 1.11, 1.32, 1.337, 4.20, 5.72, 8.04]);
+    }
 }
