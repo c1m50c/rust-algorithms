@@ -12,3 +12,21 @@ $ cargo test # Run the `cargo test` command to run the library's tests.
 ...
 test result: ok. # If things go well all tests should pass.
 ```
+
+
+## **Implemented Algorithms**
+
+**Searching Algorithms**
+- Linear Search
+- Binary Search
+
+**Sorting Algorithms**
+- Selection Sort
+- Insertion Sort
+- Bubble Sort
+- Gnome Sort
+- Quick Sort
+- Merge Sort
+- Shell Sort
+- Heap Sort
+- Comb Sort
