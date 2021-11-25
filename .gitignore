@@ -1,3 +1,6 @@
+# Visual Studio
 .vscode
+
+# Rust / Cargo
 /target
 Cargo.lock
