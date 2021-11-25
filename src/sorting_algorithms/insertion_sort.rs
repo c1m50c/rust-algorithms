@@ -14,7 +14,7 @@ pub fn insertion_sort<T: PartialOrd>(vec: &mut Vec<T>) {
         let mut j: usize = i;
         while j > 0 && vec[j] < vec[j - 1] {
             vec.swap(j - 1, j);
-            j = j - 1;
+            j -= 1;
         }
     }
 }
