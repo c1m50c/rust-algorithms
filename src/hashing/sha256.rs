@@ -30,7 +30,7 @@ pub fn sha256(message: String) -> String {
 
 /* Helper Functions */
 fn rotr(x: u32, n: u32) -> u32 {
-    return (x >> n) | (x << 32 - n)
+    return (x >> n) | (x << u32::BITS - n)
 }
 
 fn ch(x: u32, y: u32, z: u32) -> u32 {
