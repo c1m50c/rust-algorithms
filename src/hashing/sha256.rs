@@ -1,7 +1,9 @@
 /*
-    Specification Sheet
-    ===================
-    |> https://csrc.nist.gov/csrc/media/publications/fips/180/2/archive/2002-08-01/documents/fips180-2.pdf
+    Resources
+    =========
+    -- Resources for learning and implementing the algorithm.
+    |> Specification Sheet: https://csrc.nist.gov/csrc/media/publications/fips/180/2/archive/2002-08-01/documents/fips180-2.pdf
+    |> Wikipedia: https://en.wikipedia.org/wiki/SHA-2
 */
 
 
@@ -24,37 +26,65 @@ const K: [u32; 64] = [
 
 // TODO: The actual function
 pub fn sha256(message: String) -> String {
+    let mut message_vec = message.chars().collect::<Vec<char>>();
+    
+    /*
+        Padding
+        -- Pads the input message for it to be evenly split into 512-Bit Chunks.
+        |> TODO: This currently presents an assertion error, fix incorrect padding process.
+    */
+    let message_length = message_vec.len() * 8;
+    message_vec.push(0x80 as char);
+    while (message_vec.len() * 8 + 64) % 512 != 0 { message_vec.push(0x00 as char); }
+    for b in (message_length as u64).to_be_bytes() { message_vec.push(b as char); }
+    assert_eq!((message.len() * 8) % 512, 0, "Message was not properly padded");
+
     return String::new();
 }
 
 
-/* Helper Functions */
-fn rotr(x: u32, n: u32) -> u32 {
-    return (x >> n) | (x << u32::BITS - n)
+/*
+    Helper Functions
+    -- Simple functions for ease of use, operations defined in specification sheet.
+*/
+#[inline]
+fn rotate_right(x: u32, n: u32) -> u32 {
+    return (x >> n) | (x << u32::BITS - n);
 }
 
+#[inline]
+fn rotate_left(x: u32, n: u32) -> u32 {
+    return (x << n) | (x >> u32::BITS - n);
+}
+
+#[inline]
 fn ch(x: u32, y: u32, z: u32) -> u32 {
     return (x & y) ^ (x & z);
 }
 
+#[inline]
 fn maj(x: u32, y: u32, z: u32) -> u32 {
     return (x & y) ^ (x & z) ^ (y & z);
 }
 
+#[inline]
 fn sigma_0(x: u32) -> u32 {
-    return rotr(x, 2) ^ rotr(x, 13) ^ rotr(x, 22);
+    return rotate_right(x, 2) ^ rotate_right(x, 13) ^ rotate_right(x, 22);
 }
 
+#[inline]
 fn sigma_1(x: u32) -> u32 {
-    return rotr(x, 6) ^ rotr(x, 11) ^ rotr(x, 25);
+    return rotate_right(x, 6) ^ rotate_right(x, 11) ^ rotate_right(x, 25);
 }
 
+#[inline]
 fn lc_sigma_0(x: u32) -> u32 {
-    return rotr(x, 7) ^ rotr(x, 18) ^ (x >> 3);
+    return rotate_right(x, 7) ^ rotate_right(x, 18) ^ (x >> 3);
 }
 
+#[inline]
 fn lc_sigma_1(x: u32) -> u32 {
-    return rotr(x, 17) ^ rotr(x, 19) ^ (x >> 10);
+    return rotate_right(x, 17) ^ rotate_right(x, 19) ^ (x >> 10);
 }
 
 
