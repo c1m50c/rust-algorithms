@@ -1,5 +1,5 @@
-pub(crate) mod sorting_algorithms;
-pub(crate) mod searching_algorithms;
+pub(crate) mod searching;
+pub(crate) mod sorting;
 
 
 #[cfg(test)]
