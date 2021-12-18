@@ -18,6 +18,7 @@ pub type Word = u32;
 /// Chunk of bytes, normally asserted to be of length `CHUNK_SIZE`.
 pub type Chunk = Vec<u8>;
 
+
 /// Size of Chunks in bytes.
 const CHUNK_SIZE: usize = 64;
 
@@ -73,6 +74,29 @@ pub fn sha256(message: String) -> String {
     }
 
     assert_ne!(chunks.len(), 0, "Could not split message into any chunks.");
+
+
+    /*
+        Computation
+        ===========
+        |> TODO: Finish this section.
+    */
+    for i in 1 .. chunks.len() {
+        // TODO: Create Message Schedule
+        let message_schedule = ();
+
+        let mut a = H[0];
+        let mut b = H[1];
+        let mut c = H[2];
+        let mut d = H[3];
+        let mut e = H[4];
+        let mut f = H[5];
+        let mut g = H[6];
+        let mut h = H[7];
+
+        for t in 0 .. 63 {  }
+    }
+
 
     return String::new();
 }
