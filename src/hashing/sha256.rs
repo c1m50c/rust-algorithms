@@ -103,21 +103,21 @@ fn lc_sigma_1(x: u32) -> u32 {
 }
 
 
-#[cfg(test)]
-mod tests {
-    use super::sha256;
+// #[cfg(test)]
+// mod tests {
+//     use super::sha256;
 
-    #[test]
-    fn hash_one() {
-        let to_be_hashed: &str = "Hello, World!";
-        let proper_hash: &str = "DFFD6021BB2BD5B0AF676290809EC3A53191DD81C7F70A4B28688A362182986F";
-        assert_eq!(sha256(to_be_hashed.to_owned()), String::from(proper_hash));
-    }
+//     #[test]
+//     fn hash_one() {
+//         let to_be_hashed: &str = "Hello, World!";
+//         let proper_hash: &str = "DFFD6021BB2BD5B0AF676290809EC3A53191DD81C7F70A4B28688A362182986F";
+//         assert_eq!(sha256(to_be_hashed.to_owned()), String::from(proper_hash));
+//     }
 
-    #[test]
-    fn hash_two() {
-        let to_be_hashed: &str = "qwertypassword1";
-        let proper_hash: &str = "D8A5EC5F100B86C9CAD1AB984E0C2AF3D045AE6CFC9529A6F7C9CD0678E719D1";
-        assert_eq!(sha256(to_be_hashed.to_owned()), String::from(proper_hash));
-    }
-}
+//     #[test]
+//     fn hash_two() {
+//         let to_be_hashed: &str = "qwertypassword1";
+//         let proper_hash: &str = "D8A5EC5F100B86C9CAD1AB984E0C2AF3D045AE6CFC9529A6F7C9CD0678E719D1";
+//         assert_eq!(sha256(to_be_hashed.to_owned()), String::from(proper_hash));
+//     }
+// }
