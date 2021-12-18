@@ -12,12 +12,21 @@ use std::string::String;
 use std::vec::Vec;
 
 
-const H: [u32; 8] = [
+/// Words represented as a `u32` for SHA256, unsigned integer size coresponds to the individual algorithm.
+pub type Word = u32;
+
+/// Chunk of bytes, normally asserted to be of length `CHUNK_SIZE`.
+pub type Chunk = Vec<u8>;
+
+/// Size of Chunks in bytes.
+const CHUNK_SIZE: usize = 64;
+
+const H: [Word; 8] = [
     0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
     0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19,
 ];
 
-const K: [u32; 64] = [
+const K: [Word; 64] = [
     0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
     0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
     0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
@@ -50,20 +59,20 @@ pub fn sha256(message: String) -> String {
         =======
         -- Parse the padded message into 512-Bit Chunks.
     */
-    let mut chunks: Vec<Vec<u8>> = Vec::new();
+    let mut chunks: Vec<Chunk> = Vec::new();
     while message_vec.len() != 0 {
-        let mut new_chunk = Vec::with_capacity(64);
+        let mut new_chunk = Chunk::with_capacity(CHUNK_SIZE);
 
-        for _ in 0 .. 64 {
+        for _ in 0 .. CHUNK_SIZE {
             new_chunk.push(message_vec.pop().unwrap());
         }
         
+        assert_eq!(new_chunk.len(), CHUNK_SIZE, "Could not parse message into chunks properly.");
+
         chunks.push(new_chunk);
     }
 
     assert_ne!(chunks.len(), 0, "Could not split message into any chunks.");
-    for c in chunks { assert_eq!(c.len(), 64, "Could not parse message into chunks properly."); }
-
 
     return String::new();
 }
@@ -75,42 +84,42 @@ pub fn sha256(message: String) -> String {
     -- Simple functions for ease of use, operations defined in specification sheet.
 */
 #[inline(always)]
-fn rotate_right(x: u32, n: u32) -> u32 {
-    return (x >> n) | (x << u32::BITS - n);
+fn rotate_right(x: Word, n: Word) -> Word {
+    return (x >> n) | (x << Word::BITS - n);
 }
 
 #[inline(always)]
-fn rotate_left(x: u32, n: u32) -> u32 {
-    return (x << n) | (x >> u32::BITS - n);
+fn rotate_left(x: Word, n: Word) -> Word {
+    return (x << n) | (x >> Word::BITS - n);
 }
 
 #[inline(always)]
-fn ch(x: u32, y: u32, z: u32) -> u32 {
+fn ch(x: Word, y: Word, z: Word) -> Word {
     return (x & y) ^ (x & z);
 }
 
 #[inline(always)]
-fn maj(x: u32, y: u32, z: u32) -> u32 {
+fn maj(x: Word, y: Word, z: Word) -> Word {
     return (x & y) ^ (x & z) ^ (y & z);
 }
 
 #[inline(always)]
-fn sigma_0(x: u32) -> u32 {
+fn sigma_0(x: Word) -> Word {
     return rotate_right(x, 2) ^ rotate_right(x, 13) ^ rotate_right(x, 22);
 }
 
 #[inline(always)]
-fn sigma_1(x: u32) -> u32 {
+fn sigma_1(x: Word) -> Word {
     return rotate_right(x, 6) ^ rotate_right(x, 11) ^ rotate_right(x, 25);
 }
 
 #[inline(always)]
-fn lc_sigma_0(x: u32) -> u32 {
+fn lc_sigma_0(x: Word) -> Word {
     return rotate_right(x, 7) ^ rotate_right(x, 18) ^ (x >> 3);
 }
 
 #[inline(always)]
-fn lc_sigma_1(x: u32) -> u32 {
+fn lc_sigma_1(x: Word) -> Word {
     return rotate_right(x, 17) ^ rotate_right(x, 19) ^ (x >> 10);
 }
 
