@@ -1,10 +1,15 @@
 /*
-    Resources
-    =========
-    -- Resources for learning and implementing the algorithm.
+    SHA256
+    ======
+    -- Rust implementation of the Secure Hashing Algorithm.
     |> Specification Sheet: https://csrc.nist.gov/csrc/media/publications/fips/180/2/archive/2002-08-01/documents/fips180-2.pdf
     |> Wikipedia: https://en.wikipedia.org/wiki/SHA-2
 */
+
+
+use core::{u8, u32, u64};
+use std::string::String;
+use std::vec::Vec;
 
 
 const H: [u32; 8] = [
@@ -26,18 +31,27 @@ const K: [u32; 64] = [
 
 // TODO: The actual function
 pub fn sha256(message: String) -> String {
-    let mut message_vec = message.chars().collect::<Vec<char>>();
+    let mut message_vec = message.bytes().collect::<Vec<u8>>();
     
     /*
         Padding
+        =======
         -- Pads the input message for it to be evenly split into 512-Bit Chunks.
         |> TODO: This currently presents an assertion error, fix incorrect padding process.
     */
     let message_length = message_vec.len() * 8;
-    message_vec.push(0x80 as char);
-    while (message_vec.len() * 8 + 64) % 512 != 0 { message_vec.push(0x00 as char); }
-    for b in (message_length as u64).to_be_bytes() { message_vec.push(b as char); }
+    message_vec.push(0x80 as u8);
+    while (message_vec.len() * 8 + 64) % 512 != 0 { message_vec.push(0x00 as u8); }
+    for b in (message_length as u64).to_be_bytes() { message_vec.push(b); }
     assert_eq!((message.len() * 8) % 512, 0, "Message was not properly padded");
+
+    /*
+        Parsing
+        =======
+        -- Parse the padded message into 512-Bit Chunks.
+        |> TODO: The code for this section.
+    */
+    let mut chunks: Vec<[u8; 64]> = Vec::new();
 
     return String::new();
 }
@@ -45,6 +59,7 @@ pub fn sha256(message: String) -> String {
 
 /*
     Helper Functions
+    ================
     -- Simple functions for ease of use, operations defined in specification sheet.
 */
 #[inline]
@@ -88,21 +103,21 @@ fn lc_sigma_1(x: u32) -> u32 {
 }
 
 
-// #[cfg(test)]
-// mod tests {
-//     use super::sha256;
+#[cfg(test)]
+mod tests {
+    use super::sha256;
 
-//     #[test]
-//     fn hash_one() {
-//         let to_be_hashed: &str = "Hello, World!";
-//         let proper_hash: &str = "DFFD6021BB2BD5B0AF676290809EC3A53191DD81C7F70A4B28688A362182986F";
-//         assert_eq!(sha256(to_be_hashed.to_owned()), String::from(proper_hash));
-//     }
+    #[test]
+    fn hash_one() {
+        let to_be_hashed: &str = "Hello, World!";
+        let proper_hash: &str = "DFFD6021BB2BD5B0AF676290809EC3A53191DD81C7F70A4B28688A362182986F";
+        assert_eq!(sha256(to_be_hashed.to_owned()), String::from(proper_hash));
+    }
 
-//     #[test]
-//     fn hash_two() {
-//         let to_be_hashed: &str = "qwertypassword1";
-//         let proper_hash: &str = "D8A5EC5F100B86C9CAD1AB984E0C2AF3D045AE6CFC9529A6F7C9CD0678E719D1";
-//         assert_eq!(sha256(to_be_hashed.to_owned()), String::from(proper_hash));
-//     }
-// }
+    #[test]
+    fn hash_two() {
+        let to_be_hashed: &str = "qwertypassword1";
+        let proper_hash: &str = "D8A5EC5F100B86C9CAD1AB984E0C2AF3D045AE6CFC9529A6F7C9CD0678E719D1";
+        assert_eq!(sha256(to_be_hashed.to_owned()), String::from(proper_hash));
+    }
+}

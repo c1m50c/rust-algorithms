@@ -16,17 +16,25 @@ test result: ok. # If things go well all tests should pass.
 
 ## **Implemented Algorithms**
 
-**Searching Algorithms**
-- Linear Search
-- Binary Search
+<details>
+<summary><strong>🔎 Searching Algorithms</strong></summary>
+    <ul>
+        <li>Linear Search</li>
+        <li>Binary Search</li>
+    </ul>
+</details>
 
-**Sorting Algorithms**
-- Selection Sort
-- Insertion Sort
-- Bubble Sort
-- Gnome Sort
-- Quick Sort
-- Merge Sort
-- Shell Sort
-- Heap Sort
-- Comb Sort
+<details>
+<summary><strong>🧮 Sorting Algorithms</strong></summary>
+    <ul>
+        <li>Selection Sort</li>
+        <li>Insertion Sort</li>
+        <li>Bubble Sort</li>
+        <li>Gnome Sort</li>
+        <li>Quick Sort</li>
+        <li>Merge Sort</li>
+        <li>Shell Sort</li>
+        <li>Heap Sort</li>
+        <li>Comb Sort</li>
+    </ul>
+</details>
