@@ -37,13 +37,12 @@ pub fn sha256(message: String) -> String {
         Padding
         =======
         -- Pads the input message for it to be evenly split into 512-Bit Chunks.
-        |> TODO: This currently presents an assertion error, fix incorrect padding process.
     */
     let message_length = message_vec.len() * 8;
     message_vec.push(0x80 as u8);
     while (message_vec.len() * 8 + 64) % 512 != 0 { message_vec.push(0x00 as u8); }
-    for b in (message_length as u64).to_be_bytes() { message_vec.push(b); }
-    assert_eq!((message.len() * 8) % 512, 0, "Message was not properly padded");
+    for b in message_length.to_ne_bytes() { message_vec.push(b); }
+    assert_eq!((message_vec.len() * 8) % 512, 0, "Message was not properly padded");
 
     /*
         Parsing
@@ -62,42 +61,42 @@ pub fn sha256(message: String) -> String {
     ================
     -- Simple functions for ease of use, operations defined in specification sheet.
 */
-#[inline]
+#[inline(always)]
 fn rotate_right(x: u32, n: u32) -> u32 {
     return (x >> n) | (x << u32::BITS - n);
 }
 
-#[inline]
+#[inline(always)]
 fn rotate_left(x: u32, n: u32) -> u32 {
     return (x << n) | (x >> u32::BITS - n);
 }
 
-#[inline]
+#[inline(always)]
 fn ch(x: u32, y: u32, z: u32) -> u32 {
     return (x & y) ^ (x & z);
 }
 
-#[inline]
+#[inline(always)]
 fn maj(x: u32, y: u32, z: u32) -> u32 {
     return (x & y) ^ (x & z) ^ (y & z);
 }
 
-#[inline]
+#[inline(always)]
 fn sigma_0(x: u32) -> u32 {
     return rotate_right(x, 2) ^ rotate_right(x, 13) ^ rotate_right(x, 22);
 }
 
-#[inline]
+#[inline(always)]
 fn sigma_1(x: u32) -> u32 {
     return rotate_right(x, 6) ^ rotate_right(x, 11) ^ rotate_right(x, 25);
 }
 
-#[inline]
+#[inline(always)]
 fn lc_sigma_0(x: u32) -> u32 {
     return rotate_right(x, 7) ^ rotate_right(x, 18) ^ (x >> 3);
 }
 
-#[inline]
+#[inline(always)]
 fn lc_sigma_1(x: u32) -> u32 {
     return rotate_right(x, 17) ^ rotate_right(x, 19) ^ (x >> 10);
 }
