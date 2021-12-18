@@ -42,15 +42,28 @@ pub fn sha256(message: String) -> String {
     message_vec.push(0x80 as u8);
     while (message_vec.len() * 8 + 64) % 512 != 0 { message_vec.push(0x00 as u8); }
     for b in message_length.to_ne_bytes() { message_vec.push(b); }
-    assert_eq!((message_vec.len() * 8) % 512, 0, "Message was not properly padded");
+    assert_eq!((message_vec.len() * 8) % 512, 0, "Message was not properly padded.");
+
 
     /*
         Parsing
         =======
         -- Parse the padded message into 512-Bit Chunks.
-        |> TODO: The code for this section.
     */
-    let mut chunks: Vec<[u8; 64]> = Vec::new();
+    let mut chunks: Vec<Vec<u8>> = Vec::new();
+    while message_vec.len() != 0 {
+        let mut new_chunk = Vec::with_capacity(64);
+
+        for _ in 0 .. 64 {
+            new_chunk.push(message_vec.pop().unwrap());
+        }
+        
+        chunks.push(new_chunk);
+    }
+
+    assert_ne!(chunks.len(), 0, "Could not split message into any chunks.");
+    for c in chunks { assert_eq!(c.len(), 64, "Could not parse message into chunks properly."); }
+
 
     return String::new();
 }
