@@ -45,3 +45,7 @@ test result: ok. # If things go well all tests should pass.
         <li>✔ Comb Sort</li>
     </ul>
 </details>
+
+
+## **License**
+<a href="https://github.com/c1m50c/rust-algorithms/blob/main/LICENSE">MIT License</a>
