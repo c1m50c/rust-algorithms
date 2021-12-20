@@ -11,6 +11,7 @@ use core::{u8, u32, u64};
 use std::string::String;
 use std::vec::Vec;
 
+const MODULO: u32 = 4294967295; // TODO: This is (2^32)-1 not 2^32, so this might not work properly???
 
 const K: [u32; 64] = [
     0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
@@ -79,7 +80,7 @@ pub fn sha256(message: String) -> String {
             /* FIXME: Conversion to u32 might result in miscalculation later? */
             /* FIXME: Addition overflow error */
             if t <= 15 { w.push(c[t] as u32); }
-            else { w.push(lc_sigma_1(w[t - 2]) + w[t - 7] + lc_sigma_0(w[t - 15]) + w[t - 16]); }
+            else { w.push((lc_sigma_1(w[t - 2]) + w[t - 7] + lc_sigma_0(w[t - 15]) + w[t - 16]) % MODULO); }
         }
 
         assert_eq!(w.len(), 64, "Could not properly create a message schedule.");
@@ -94,27 +95,27 @@ pub fn sha256(message: String) -> String {
         let mut h = hash[7];
 
         for t in 0 .. 64 {
-            let t1: u32 = h + sigma_1(e) + ch(e, f, g) + K[t] + w[t];
-            let t2: u32 = sigma_0(a) + maj(a, b, c);
+            let t1: u32 = (h + sigma_1(e) + ch(e, f, g) + K[t] + w[t]) % MODULO;
+            let t2: u32 = (sigma_0(a) + maj(a, b, c)) % MODULO;
 
             h = g;
             g = f;
             f = e;
-            e = d + t1;
+            e = (d + t1) % MODULO;
             d = c;
             c = b;
             b = a;
-            a = t1 + t2;
+            a = (t1 + t2) % MODULO;
         }
 
-        hash[0] = a + hash[0];
-        hash[1] = b + hash[1];
-        hash[2] = c + hash[2];
-        hash[3] = d + hash[3];
-        hash[4] = e + hash[4];
-        hash[5] = f + hash[5];
-        hash[6] = g + hash[6];
-        hash[7] = h + hash[7];
+        hash[0] = (a + hash[0]) % MODULO;
+        hash[1] = (b + hash[1]) % MODULO;
+        hash[2] = (c + hash[2]) % MODULO;
+        hash[3] = (d + hash[3]) % MODULO;
+        hash[4] = (e + hash[4]) % MODULO;
+        hash[5] = (f + hash[5]) % MODULO;
+        hash[6] = (g + hash[6]) % MODULO;
+        hash[7] = (h + hash[7]) % MODULO;
     }
 
 
