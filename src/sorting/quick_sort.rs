@@ -4,18 +4,25 @@ use std::vec::Vec;
 /// Handles the sorting aspect of `quick_sort`.
 #[allow(dead_code)]
 fn partition<T: PartialOrd>(vec: &mut Vec<T>, left: isize, right: isize) -> isize {
-    let pivot: usize = right as usize;
     let (mut i, mut j) = (left - 1, right);
+    let pivot: usize = right as usize;
 
     loop {
         i += 1;
-        while vec[i as usize] < vec[pivot] { i += 1; }
+        while vec[i as usize] < vec[pivot] {
+            i += 1;
+        }
 
         j -= 1;
-        while j >= 0 && vec[j as usize] > vec[pivot] { j -= 1; }
+        while j >= 0 && vec[j as usize] > vec[pivot] {
+            j -= 1;
+        }
 
-        if i >= j { break; }
-        else { vec.swap(i as usize, j as usize); }
+        if i >= j {
+            break;
+        } else {
+            vec.swap(i as usize, j as usize);
+        }
     }
 
     vec.swap(i as usize, pivot);

@@ -7,8 +7,15 @@ use std::vec::Vec;
 fn merge<T: PartialOrd + Copy>(left: usize, middle: usize, right: usize, vec: &mut Vec<T>) {
     /* Temporay vectors for each half in `vec` */
     let (mut left_vec, mut right_vec) = (Vec::new(), Vec::new());
-    for v in vec.iter().take(middle + 1).skip(left) { left_vec.push(*v); }
-    for v in vec.iter().take(right + 1).skip(middle + 1) { right_vec.push(*v); }
+
+    for v in vec.iter().take(middle + 1).skip(left) {
+        left_vec.push(*v);
+    }
+
+    for v in vec.iter().take(right + 1).skip(middle + 1) {
+        right_vec.push(*v);
+    }
+    
     let (left_len, right_len) = (left_vec.len(), right_vec.len());
 
     /* Track positions while merging */
@@ -19,8 +26,7 @@ fn merge<T: PartialOrd + Copy>(left: usize, middle: usize, right: usize, vec: &m
         if left_vec[l] < right_vec[r] {
             vec[v] = left_vec[l];
             l += 1;
-        }
-        else {
+        } else {
             vec[v] = right_vec[r];
             r += 1
         }

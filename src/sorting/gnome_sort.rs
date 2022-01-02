@@ -12,6 +12,7 @@ use std::vec::Vec;
 pub fn gnome_sort<T: PartialOrd>(vec: &mut Vec<T>) {
     for p in 1 .. vec.len() {
         let mut position: usize = p;
+        
         while position > 0 && vec[position - 1] > vec[position] {
             vec.swap(position - 1, position);
             position -= 1;

@@ -11,13 +11,16 @@ use std::vec::Vec;
 #[allow(dead_code)]
 pub fn selection_sort<T: PartialOrd>(vec: &mut Vec<T>) {
     let vec_len: usize = vec.len();
+
     for i in 0 .. vec_len {
         let mut current_minimum_index: usize = i;
+
         for j in i + 1 .. vec_len {
             if vec[j] < vec[current_minimum_index] {
                 current_minimum_index = j;
             }
         }
+        
         vec.swap(i, current_minimum_index);
     }
 }

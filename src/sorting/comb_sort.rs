@@ -16,9 +16,10 @@ pub fn comb_sort<T: PartialOrd>(vec: &mut Vec<T>) {
 
     while sorted == false {
         gap = f64::from(gap / GAP_SHRINK_FACTOR).floor();
+
         if gap <= 1.0 {
-            gap = 1.0;
             sorted = true;
+            gap = 1.0;
         }
 
         let mut i = 0;
@@ -27,6 +28,7 @@ pub fn comb_sort<T: PartialOrd>(vec: &mut Vec<T>) {
                 vec.swap(i, i + gap as usize);
                 sorted = false;
             }
+
             i += 1;
         }
     }

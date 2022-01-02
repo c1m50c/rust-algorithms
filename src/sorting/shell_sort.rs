@@ -12,6 +12,7 @@ use std::vec::Vec;
 #[allow(dead_code)]
 pub fn shell_sort<T: PartialOrd + Copy>(vec: &mut Vec<T>) {
     const GAP_SEQUENCE: [usize; 8] = [ 701, 301, 132, 57, 23, 10, 4, 1 ];
+    
     for gap in GAP_SEQUENCE {
         for i in gap .. vec.len() {
             let temp: T = vec[i];

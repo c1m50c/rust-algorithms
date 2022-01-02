@@ -25,7 +25,7 @@ impl SearchingAlgorithms {
 
 
 #[allow(dead_code)]
-pub fn concatenated_search<T: PartialOrd + PartialEq>(vec: &Vec<T>, finding: T, algorithm: SearchingAlgorithms) -> Option<usize >{
+pub fn concatenated_search<T: PartialOrd + PartialEq>(vec: &Vec<T>, finding: T, algorithm: SearchingAlgorithms) -> Option<usize> {
     match algorithm {
         SearchingAlgorithms::LinearSearch => { return binary_search::binary_search(vec, finding); }
         SearchingAlgorithms::BinarySearch => { return linear_search::linear_search(vec, finding); }
